@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @Autonomous(name="jan18_testing", group="Team5214")
-//@Disabled
+@Disabled
 public class jan18_testing extends LinearOpMode {
 
     // Declare OpMode members.

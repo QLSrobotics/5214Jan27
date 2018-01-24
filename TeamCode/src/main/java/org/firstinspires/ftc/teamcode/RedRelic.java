@@ -1,17 +1,33 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+
 
 @Autonomous(name="RedRelic", group="Team5214")
 //@Disabled
 public class RedRelic extends LinearOpMode {
 
+    //declare vuforia recognizing engine
+    VuforiaLocalizer vuforia;
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     //declare drive motors
@@ -35,21 +51,30 @@ public class RedRelic extends LinearOpMode {
 
     final double currentRatio = 1.3; //ratio set for red/blue, for color id function
 
-
-    //JOHN ADDED THIS
-
-    //william added this
-
-
-
-
-
-    //ALIVA IS AWEOSME
-
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+
+        //using phone camera for image recognition
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        //License key, do not change
+        parameters.vuforiaLicenseKey = "AVOFXuz/////AAAAGf45mZPfQEQBt1NyBSqlPuYQkVhLXgkSQpOqQqWb/FoWqJ" +
+                "WqG7KKeaIVeJzCSsLJ58FGWwE0Z/vvzSHrZBeZN9jN7c+gru1h0T3k0wLaoN1b6bFIHn93evRQ0DcFcgy4uMHZ1" +
+                "T87fT4WrKldfG6XT7PyThP2Fk5C8SbASqna7IKl26eb+zdOFXRKG+U1pZyV9yGgMsmBVZCxDZiT/G6JUpg4DMGrZVT" +
+                "8BXdVvs+mpDLQ4tH/XL5ikYp1++1fbYhJtA3naS5/laHiPiHONGAdLbHkE4s8EOxpB8+lqpJN6hlcqtMegarTOuwWYXXP" +
+                "jSnNnkUWBKuW6nWqtF3k1CIUoSTBuFpbwAvf+T6i1CkL6IoB";
+        //using back camera for recognizing
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+
+        //importing the three image asset and hook up to vuforia engine
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+        VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+
 
         //mapping drive motors to configuration
         leftBack  = hardwareMap.get(DcMotor.class, "LB");
@@ -79,29 +104,71 @@ public class RedRelic extends LinearOpMode {
         rightFront.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
+        //enable image tracking
+        relicTrackables.activate();
+
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
 
         while (opModeIsActive()){
+
+
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+
+                telemetry.addData("VuMark", "%s visible", vuMark);
+
+            }
+            else {
+                telemetry.addData("VuMark", "not visible");
+            }
+
+            telemetry.update();
+
+            sleep(3000);
+
+
             arm(.1); // put arm down
-            sleep(1000);
+            sleep(2000);
 
             colorid = checkColor(colorFront, currentRatio);
 
             telemetry.addLine(colorid);
             telemetry.update();
+
             sleep(2000);
 
-            if (colorid == "RED"){knckSer.setPosition(1);
-            }else if(checkColor(colorFront,.4) == "BLUE"){knckSer.setPosition(0);}
+            if (colorid == "RED"){flickServo.setPosition(.75);
+            }else if(checkColor(colorFront,.4) == "BLUE"){flickServo.setPosition(.25);}
+
+            sleep(2000);
+            flickServo.setPosition(.5);
+            sleep(2000);
+            arm(.9); // put arm up
+            sleep(2000);
+
+            driveStraight(.25,1000); // drive forward
 
             sleep(1000);
 
-            driveStraight(.25,1000); // drive forward
             turn(.25,1000); // turn right towards glyph
+
+            sleep(1000);
+
             driveStraight(.25,1000); // drive straight to glyph
-            dump(.25,.25); // dump cube
+
+            sleep(1000);
+
+            dump(.15,.85); // dump cube
+
+            sleep(1000);
+
+            dump(.7,.3); // reset platform
+
+            sleep(1000);
+
+            driveStraight(.25,200);
 
         }
     }
@@ -156,7 +223,7 @@ public class RedRelic extends LinearOpMode {
 
         }
     }
-    public String checkColor(ColorSensor sensor, double ratio) {
+    private String checkColor(ColorSensor sensor, double ratio) {
         double redOverBlue = (sensor.red()+1) / (sensor.blue() + 1);
         if (redOverBlue >= ratio) {
             //if it is greater than ratio, it is red
