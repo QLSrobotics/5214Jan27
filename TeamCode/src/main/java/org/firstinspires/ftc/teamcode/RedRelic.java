@@ -42,6 +42,8 @@ public class RedRelic extends LinearOpMode {
 
 
 
+
+
     //ALIVA IS AWEOSME
 
     @Override
@@ -80,18 +82,26 @@ public class RedRelic extends LinearOpMode {
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
-            arm(0.1);
 
+        while (opModeIsActive()){
+            arm(.1); // put arm down
             sleep(1000);
 
-            //color gives the output of the front ball (the one which is closer to colorFront sensor)
             colorid = checkColor(colorFront, currentRatio);
-            //print color state and update on display
+
             telemetry.addLine(colorid);
             telemetry.update();
+            sleep(2000);
+
+            if (colorid == "RED"){knckSer.setPosition(1);
+            }else if(checkColor(colorFront,.4) == "BLUE"){knckSer.setPosition(0);}
 
             sleep(1000);
+
+            driveStraight(.25,1000); // drive forward
+            turn(.25,1000); // turn right towards glyph
+            driveStraight(.25,1000); // drive straight to glyph
+            dump(.25,.25); // dump cube
 
         }
     }
