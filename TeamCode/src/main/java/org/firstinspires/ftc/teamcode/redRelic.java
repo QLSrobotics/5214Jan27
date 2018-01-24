@@ -69,7 +69,7 @@ public class redRelic extends LinearOpMode {
         limtTop = hardwareMap.get(DigitalChannel.class, "touch_top");
         limtBot = hardwareMap.get(DigitalChannel.class, "touch_bot");
 
-        colorFront= hardwareMap.get(ColorSensor.class, "CS");
+        colorFront= hardwareMap.get(ColorSensor.class, "CSF");
 
         align.setPosition(0);
 
