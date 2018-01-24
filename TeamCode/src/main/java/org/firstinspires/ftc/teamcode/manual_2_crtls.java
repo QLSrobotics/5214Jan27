@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,12 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * Created by hima on 1/18/18.
- */
-
 @TeleOp(name="manual_2_crtls", group="Team5214")
-
+//@Disabled
 public class manual_2_crtls extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -48,7 +45,7 @@ public class manual_2_crtls extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException{
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -120,7 +117,7 @@ public class manual_2_crtls extends LinearOpMode {
             if((gamepad2.y && limtTop.getState()==true) || (gamepad2.y && limtBot.getState()==false)){
                 liftMotor.setPower(-1);
             }
-            else if ((gamepad2.b && limtBot.getState()==true) || (gamepad2.b && limtTop.getState()==false)){
+            else if ((gamepad2.a && limtBot.getState()==true) || (gamepad2.b && limtTop.getState()==false)){
                 liftMotor.setPower(1);
             }
             else if(limtTop.getState()==false || limtBot.getState()==false){
