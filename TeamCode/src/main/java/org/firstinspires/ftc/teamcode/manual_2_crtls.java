@@ -116,9 +116,10 @@ public class manual_2_crtls extends LinearOpMode {
 
 
             //elevator controls
-            if(gamepad2.y || (gamepad2.y && limtBot.getState()==false)){ liftMotor.setPower(-1);}
-            else if (gamepad2.b || (gamepad2.b && limtTop.getState()==false)){liftMotor.setPower(1);}
+            if(gamepad2.y && limtTop.getState()==false|| (gamepad2.y && limtBot.getState()==false)){ liftMotor.setPower(-1);}
+            else if (gamepad2.b && limtBot.getState()==false|| (gamepad2.b && limtTop.getState()==false)){liftMotor.setPower(1);}
             else if(limtTop.getState()==false || limtBot.getState()==false){liftMotor.setPower(0);}
+            else{liftMotor.setPower(0);}
 
 
 
