@@ -36,6 +36,8 @@ public class RedRelic extends LinearOpMode {
     final double currentRatio = 1.3; //ratio set for red/blue, for color id function
 
 
+    //JOHN ADDED THIS
+
 
     @Override
     public void runOpMode() {
