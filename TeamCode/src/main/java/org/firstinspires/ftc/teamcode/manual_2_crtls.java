@@ -84,7 +84,8 @@ public class manual_2_crtls extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-
+            colSer.setPosition(.9);
+            knckSer.setPosition(.5);
             //game pad one cotrls
 
             //gp 1 dpad
@@ -93,8 +94,8 @@ public class manual_2_crtls extends LinearOpMode {
             if(gamepad1.dpad_left){colSer.setPosition(.9); knckSer.setPosition(.5);}
             if(gamepad1.dpad_right){lBelt.setPower(0);rBelt.setPower(0);}
 
-            if(gamepad1.y){ramp.setPower(0.5);
-            } else if(gamepad1.x){ramp.setPower(-0.5);
+            if(gamepad1.y){ramp.setPower(-0.5);
+            } else if(gamepad1.x){ramp.setPower(0.5);
             } else{ramp.setPower(0);}
 
             if(gamepad1.left_bumper){lDum.setPosition(.15);rDum.setPosition(.85);}
@@ -116,9 +117,18 @@ public class manual_2_crtls extends LinearOpMode {
 
 
             //elevator controls
-            if(gamepad2.y || (gamepad2.y && limtBot.getState()==false)){ liftMotor.setPower(-1);}
-            else if (gamepad2.b || (gamepad2.b && limtTop.getState()==false)){liftMotor.setPower(1);}
-            else if(limtTop.getState()==false || limtBot.getState()==false){liftMotor.setPower(0);}
+            if((gamepad2.y && limtTop.getState()==true) || (gamepad2.y && limtBot.getState()==false)){
+                liftMotor.setPower(-1);
+            }
+            else if ((gamepad2.b && limtBot.getState()==true) || (gamepad2.b && limtTop.getState()==false)){
+                liftMotor.setPower(1);
+            }
+            else if(limtTop.getState()==false || limtBot.getState()==false){
+                liftMotor.setPower(0);
+            }
+            else {
+                liftMotor.setPower(0);
+            }
 
 
 
@@ -153,9 +163,9 @@ public class manual_2_crtls extends LinearOpMode {
         }
     }
 
-    private void setPos(long in, long out, double algin, long sTime ){
+    private void setPos(long in, long out, double alignInput, long sTime ){
         if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
-            align.setPosition(algin);
+            align.setPosition(alignInput);
         }
     }
 
@@ -167,17 +177,13 @@ public class manual_2_crtls extends LinearOpMode {
             rBelt.setPower(0);
         }
 
-        setPos(100,300,.4,startTime);
+        setPos(100,300,.5,startTime);
         setPos(300,500,.6,startTime);
         setPos(500,700,.45,startTime);
-        setPos(900,1300,.8,startTime);
-        setPos(1300,1500,.45,startTime);
-        setPos(1500,1900,.9,startTime);
-        setPos(1900,2200,.45,startTime);
-        setPos(2200,2500,.9,startTime);
+        setPos(900,1500,.8,startTime);
 
 
-        if((System.currentTimeMillis() > (startTime+2500)) && (System.currentTimeMillis() < (startTime+3000))) {
+        if((System.currentTimeMillis() > (startTime+1500)) && (System.currentTimeMillis() < (startTime+2000))) {
             align.setPosition(0);
 //            lBelt.setPower(1);
 //            rBelt.setPower(-1);
