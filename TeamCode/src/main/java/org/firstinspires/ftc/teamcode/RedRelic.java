@@ -1,19 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
-@Autonomous(name="jan18_testing", group="Team5214")
+@Autonomous(name="RedRelic", group="Team5214")
 //@Disabled
-public class jan18_testing extends LinearOpMode {
+public class RedRelic extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -30,8 +27,13 @@ public class jan18_testing extends LinearOpMode {
     private Servo flickServo;
     private String colorid;
     // declare color sensor
-    ColorSensor colorFront;
-    ColorSensor colorBack;
+    private ColorSensor colorFront;
+
+    //use the two variables in two color sensors situation
+//    ColorSensor colorFront;
+//    ColorSensor colorBack;
+
+    final double currentRatio = 1.3; //ratio set for red/blue, for color id function
 
 
 
@@ -55,8 +57,11 @@ public class jan18_testing extends LinearOpMode {
         flickServo = hardwareMap.get(Servo.class, "FLICKSERVO");
 
         //mapping color sensor to configuration
-        colorFront  = hardwareMap.get(ColorSensor.class, "CSF");
-        colorBack = hardwareMap.get(ColorSensor.class, "CSB");
+        colorFront = hardwareMap.get(ColorSensor.class, "CSF");
+
+        //use the two mapping where there are two color sensors
+//        colorFront  = hardwareMap.get(ColorSensor.class, "CSF");
+//        colorBack = hardwareMap.get(ColorSensor.class, "CSB");
 
         //drive motor directions
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -71,20 +76,16 @@ public class jan18_testing extends LinearOpMode {
         while (opModeIsActive()) {
             arm(0.1);
 
-
             sleep(1000);
 
             //color gives the output of the front ball (the one which is closer to colorFront sensor)
-            colorid = checkColor(colorFront, colorBack, 1.25);
-            //print color state
+            colorid = checkColor(colorFront, currentRatio);
+            //print color state and update on display
             telemetry.addLine(colorid);
             telemetry.update();
 
-
             sleep(1000);
 
-            telemetry.update();
-            //break;
         }
     }
     private void driveStraight (double power, int time) {
@@ -118,6 +119,13 @@ public class jan18_testing extends LinearOpMode {
         leftDump.setPosition(left);
         rightDump.setPosition(right);
     }
+    private void flicker(double position) {
+        //setting the flicker servo to an input value
+        flickServo.setPosition(position);
+        sleep(2000);
+        flickServo.setPosition(0.5);
+
+    }
     private void arm(double position) {
         //setting the color servo to an input value
         colorServo.setPosition(position);
@@ -131,35 +139,50 @@ public class jan18_testing extends LinearOpMode {
 
         }
     }
-    public String checkColor(ColorSensor front, ColorSensor back, double ratio) {
-        double redOverBluFront = (front.red()+1)/(front.blue()+1); //red over blue ratio for front color sensor
-        double redOverBluBack = (back.red()+1)/(back.blue()+1);//red over blue ratio for back color sensor
-        if(1/redOverBluBack >= ratio && redOverBluFront >= ratio){ //if front is red and back is blue, return red
+    public String checkColor(ColorSensor sensor, double ratio) {
+        double redOverBlue = (sensor.red()+1) / (sensor.blue() + 1);
+        if (redOverBlue >= ratio) {
+            //if it is greater than ratio, it is red
             return "RED";
         }
-        else if (((redOverBluBack)>=ratio) && ((1/redOverBluFront)>=ratio)){
-            //if front is blue and back is red, return blue
+        else if (redOverBlue <= ratio) {
+            //if it is less than ratio, it is blue
             return "BLUE";
-        }
-        else if (((1/redOverBluBack)>=ratio) && ((redOverBluFront)<=ratio) && ((redOverBluFront)>=1/ratio)){
-            //if back is blue and front is unsure, return red
-            return "RED";
-        }
-        else if (((redOverBluBack)>=ratio) && ((redOverBluFront)<=ratio) && ((redOverBluFront)>=1/ratio)){
-            //if back is red and front is unsure, return blue
-            return "BLUE";
-        }
-        else if (((1/redOverBluFront)>=ratio) && ((redOverBluBack)<=ratio) && ((redOverBluBack)>=1/ratio)){
-            //if front is blue and back is unsure, return blue
-            return "BLUE";
-        }
-        else if (((redOverBluFront)>=ratio) && ((redOverBluBack)<=ratio) && ((redOverBluBack)>=1/ratio)){
-            //if front is red and back is unsure, return red
-            return "RED";
         }
         else {
-            //if none of the above, we don't know what's happening, so return undefined.
+            //if nothing is detected, return not defined
             return "UNDEF";
         }
     }
+//    public String checkTwoColor_(ColorSensor frontSensor, ColorSensor backSensor, double ratio) {
+//        double redOverBlueFront = (frontSensor.red()+1)/(frontSensor.blue()+1); //red over blue ratio for front color sensor
+//        double redOverBlueBack = (backSensor.red()+1)/(backSensor.blue()+1);//red over blue ratio for back color sensor
+//        if(1/redOverBlueBack >= ratio && redOverBlueFront >= ratio){ //if front is red and back is blue, return red
+//            return "RED";
+//        }
+//        else if (((redOverBlueBack)>=ratio) && ((1/redOverBlueFront)>=ratio)){
+//            //if front is blue and back is red, return blue
+//            return "BLUE";
+//        }
+//        else if (((1/redOverBlueBack)>=ratio) && ((redOverBlueFront)<=ratio) && ((redOverBlueFront)>=1/ratio)){
+//            //if back is blue and front is unsure, return red
+//            return "RED";
+//        }
+//        else if (((redOverBlueBack)>=ratio) && ((redOverBlueFront)<=ratio) && ((redOverBlueFront)>=1/ratio)){
+//            //if back is red and front is unsure, return blue
+//            return "BLUE";
+//        }
+//        else if (((1/redOverBlueFront)>=ratio) && ((redOverBlueBack)<=ratio) && ((redOverBlueBack)>=1/ratio)){
+//            //if front is blue and back is unsure, return blue
+//            return "BLUE";
+//        }
+//        else if (((redOverBlueFront)>=ratio) && ((redOverBlueBack)<=ratio) && ((redOverBlueBack)>=1/ratio)){
+//            //if front is red and back is unsure, return red
+//            return "RED";
+//        }
+//        else {
+//            //if none of the above, we don't know what's happening, so return undefined.
+//            return "UNDEF";
+//        }
+//    }
 }
