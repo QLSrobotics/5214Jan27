@@ -39,6 +39,9 @@ public class RedRelic extends LinearOpMode {
     //JOHN ADDED THIS
 
 
+
+    //ALIVA IS AWEOSME
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
