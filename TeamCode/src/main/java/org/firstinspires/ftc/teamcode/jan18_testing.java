@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @Autonomous(name="jan18_testing", group="Team5214")
-//@Disabled
+@Disabled
 public class jan18_testing extends LinearOpMode {
 
     // Declare OpMode members.
@@ -69,25 +69,19 @@ public class jan18_testing extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            //read key
-
-            //check color
             arm(0.1);
+
+
             sleep(1000);
+
             //color gives the output of the front ball (the one which is closer to colorFront sensor)
             colorid = checkColor(colorFront, colorBack, 1.25);
             //print color state
             telemetry.addLine(colorid);
             telemetry.update();
+
+
             sleep(1000);
-
-            //knock ball
-
-            //score glyph
-
-            driveStraight(.25, 2000);
-
-
 
             telemetry.update();
             //break;
