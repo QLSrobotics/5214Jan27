@@ -67,7 +67,7 @@ public class RedRelic extends LinearOpMode {
                 "8BXdVvs+mpDLQ4tH/XL5ikYp1++1fbYhJtA3naS5/laHiPiHONGAdLbHkE4s8EOxpB8+lqpJN6hlcqtMegarTOuwWYXXP" +
                 "jSnNnkUWBKuW6nWqtF3k1CIUoSTBuFpbwAvf+T6i1CkL6IoB";
         //using back camera for recognizing
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
 
         //importing the three image asset and hook up to vuforia engine
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
@@ -137,26 +137,20 @@ public class RedRelic extends LinearOpMode {
             telemetry.addLine(colorid);
             telemetry.update();
 
-            sleep(2000);
+            sleep(1000);
 
-            if (colorid == "RED"){flicker(1);
-            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(0);}
+            if (colorid == "RED"){flicker(0);
+            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
 
-            sleep(2000);
+            sleep(1000);
             arm(.9); // put arm up
-            sleep(2000);
+            sleep(1500);
 
             driveStraight(-.25,1000); // drive forward
 
             sleep(1000);
 
-            turn(-.25,2000); // turn right towards glyph
-
-            sleep(1000);
-
-            driveStraight(-.25,1500); // drive straight to glyph
-
-            sleep(1000);
+            turn(-.25,900); // turn right towards glyph
 
             dump(.15,.85); // dump cube
 
@@ -166,10 +160,20 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(-.25,200);
+            driveStraight(-.25,1000); // drive straight to glyph, pushing the cube
+
+            sleep(1000);
+
+            driveStraight(.25,200);
+
+            sleep(1000);
+
+            idle();
 
         }
     }
+
+
     private void driveStraight (double power, int time) {
         leftBack.setPower(power);
         rightBack.setPower(power);
@@ -268,3 +272,26 @@ public class RedRelic extends LinearOpMode {
 //        }
 //    }
 }
+
+//we think this works for center
+//    driveStraight(-.25,1350); // drive forward
+//
+//            sleep(1000);
+//
+//            turn(-.25,1200); // turn right towards glyph
+//
+//            dump(.15,.85); // dump cube
+//
+//            sleep(1000);
+//
+//            dump(.7,.3); // reset platform
+//
+//            sleep(1000);
+//
+//            driveStraight(-.25,800); // drive straight to glyph, pushing the cube
+//
+//            sleep(1000);
+//
+//            driveStraight(.25,200);
+//
+//            sleep(1000);
