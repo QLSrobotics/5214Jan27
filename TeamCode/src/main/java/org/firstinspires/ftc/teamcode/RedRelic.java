@@ -109,7 +109,7 @@ public class RedRelic extends LinearOpMode {
 
         runtime.reset();
 
-        // run until the end of the match (driver presses STOP)
+        // run until the end of the match (driver presses STOP)h
 
         while (opModeIsActive()){
 
@@ -139,24 +139,22 @@ public class RedRelic extends LinearOpMode {
 
             sleep(2000);
 
-            if (colorid == "RED"){flickServo.setPosition(.75);
-            }else if(checkColor(colorFront,.4) == "BLUE"){flickServo.setPosition(.25);}
+            if (colorid == "RED"){flicker(1);
+            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(0);}
 
-            sleep(2000);
-            flickServo.setPosition(.5);
             sleep(2000);
             arm(.9); // put arm up
             sleep(2000);
 
-            driveStraight(.25,1000); // drive forward
+            driveStraight(-.25,1000); // drive forward
 
             sleep(1000);
 
-            turn(.25,1000); // turn right towards glyph
+            turn(-.25,1000); // turn right towards glyph
 
             sleep(1000);
 
-            driveStraight(.25,1000); // drive straight to glyph
+            driveStraight(-.25,1000); // drive straight to glyph
 
             sleep(1000);
 
@@ -168,7 +166,7 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(.25,200);
+            driveStraight(-.25,200);
 
         }
     }
