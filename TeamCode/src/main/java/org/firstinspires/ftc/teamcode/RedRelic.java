@@ -150,11 +150,11 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            turn(-.25,1000); // turn right towards glyph
+            turn(-.25,2000); // turn right towards glyph
 
             sleep(1000);
 
-            driveStraight(-.25,1000); // drive straight to glyph
+            driveStraight(-.25,1500); // drive straight to glyph
 
             sleep(1000);
 
