@@ -58,7 +58,7 @@ public class manual_2_crtls extends LinearOpMode {
         rDum = hardwareMap.servo.get("RD");
         lDum = hardwareMap.servo.get("LD");
         colSer =hardwareMap.servo.get("COLORSERVO");
-        knckSer = hardwareMap.servo.get("KNOCKSERVO");
+        knckSer = hardwareMap.servo.get("FLICKSERVO");
         align = hardwareMap.servo.get("ALIGN1");
 
         lBelt = hardwareMap.dcMotor.get("LBELT");
