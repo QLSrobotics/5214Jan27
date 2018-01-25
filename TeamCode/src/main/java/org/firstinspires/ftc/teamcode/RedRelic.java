@@ -67,7 +67,7 @@ public class RedRelic extends LinearOpMode {
                 "8BXdVvs+mpDLQ4tH/XL5ikYp1++1fbYhJtA3naS5/laHiPiHONGAdLbHkE4s8EOxpB8+lqpJN6hlcqtMegarTOuwWYXXP" +
                 "jSnNnkUWBKuW6nWqtF3k1CIUoSTBuFpbwAvf+T6i1CkL6IoB";
         //using back camera for recognizing
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
 
         //importing the three image asset and hook up to vuforia engine
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
@@ -118,13 +118,14 @@ public class RedRelic extends LinearOpMode {
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
                 telemetry.addData("VuMark", "%s visible", vuMark);
+                telemetry.update();
 
             }
             else {
                 telemetry.addData("VuMark", "not visible");
+                telemetry.update();
             }
 
-            telemetry.update();
 
             sleep(3000);
 
