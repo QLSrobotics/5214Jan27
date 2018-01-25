@@ -146,7 +146,15 @@ public class RedRelic extends LinearOpMode {
             arm(.9); // put arm up
             sleep(1500);
 
-            driveStraight(-.25,1000); // drive forward
+            driveStraight(-.25,1500); // drive forward
+
+            sleep(1000);
+
+            driveStraight(.25,700); // drive forward
+
+            sleep(1000);
+
+            driveStraight(-.25,600); // drive forward
 
             sleep(1000);
 
@@ -160,13 +168,13 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(-.25,1000); // drive straight to glyph, pushing the cube
+            driveStraight(-.25,1000); // drive straig®ht to glyph, pushing the cube
 
             sleep(1000);
 
             driveStraight(.25,200);
 
-            sleep(1000);
+            sleep(30000);
 
             idle();
 
@@ -274,24 +282,32 @@ public class RedRelic extends LinearOpMode {
 }
 
 //we think this works for center
-//    driveStraight(-.25,1350); // drive forward
+
 //
-//            sleep(1000);
+//    sleep(1000);
+//    arm(.9); // put arm up
+//    sleep(1500);
 //
-//            turn(-.25,1200); // turn right towards glyph
+//    driveStraight(-.25,1000); // drive forward
 //
-//            dump(.15,.85); // dump cube
+//    sleep(1000);
 //
-//            sleep(1000);
+//    turn(-.25,900); // turn right towards glyph
 //
-//            dump(.7,.3); // reset platform
+//    dump(.15,.85); // dump cube
 //
-//            sleep(1000);
+//    sleep(1000);
 //
-//            driveStraight(-.25,800); // drive straight to glyph, pushing the cube
+//    dump(.7,.3); // reset platform
 //
-//            sleep(1000);
+//    sleep(1000);
 //
-//            driveStraight(.25,200);
+//    driveStraight(-.25,1000); // drive straight to glyph, pushing the cube
 //
-//            sleep(1000);
+//    sleep(1000);
+//
+//    driveStraight(.25,200);
+//
+//    sleep(1000);
+//
+//    idle();
