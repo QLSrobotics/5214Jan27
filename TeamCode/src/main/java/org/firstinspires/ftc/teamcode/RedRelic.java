@@ -72,6 +72,7 @@ public class RedRelic extends LinearOpMode {
 
         //importing the three image asset and hook up to vuforia engine
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
@@ -113,12 +114,19 @@ public class RedRelic extends LinearOpMode {
 
         runtime.reset();
 
+
         // run until the end of the match (driver presses STOP)h
 
         while (opModeIsActive()){
-
-
+            sleep(1000);
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            sleep(1000);
+            telemetry.addLine(vuMark.toString());
+            sleep(1000);
+            telemetry.update();
+
+            sleep(3000);
+
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
                 telemetry.addLine("%s visible" + vuMark.toString());
@@ -131,10 +139,11 @@ public class RedRelic extends LinearOpMode {
 
             }
 
-
+            telemetry.update();
 
             sleep(3000);
 
+            telemetry.update();
 
             arm(.1); // put arm down
             sleep(2000);
@@ -185,9 +194,11 @@ public class RedRelic extends LinearOpMode {
 
             driveStraight(.25,200);
 
-            sleep(30000);
+            sleep(1000);
 
             idle();
+
+            break;
 
         }
     }
