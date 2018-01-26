@@ -166,39 +166,90 @@ public class RedRelic extends LinearOpMode {
             sleep(500);
             ramp.setPower(0);
 
-            driveStraight(-.15,2000); // drive forward
+//keyresult
 
-            sleep(1000);
+            String keyResult = vuMark.toString();
+            if(keyResult == "RIGHT"){
+               //score cube in left
+            }
+            else if(keyResult == "LEFT") {
 
-            driveStraight(.25,700); // drive forward
+                driveStraight(-.15, 2000); // drive forward
 
-            sleep(1000);
+                sleep(1000);
 
-            driveStraight(-.25,650); // drive forward
+                driveStraight(.25, 700); // drive forward
 
-            sleep(1000);
+                sleep(1000);
 
-            turn(-.25,1600); // turn right towards glyph
+                driveStraight(-.25, 650); // drive forward
 
-            dump(.15,.85); // dump cube
+                sleep(1000);
 
-            sleep(1000);
+                turn(-.25, 1600); // turn right towards glyph
 
-            dump(.7,.3); // reset platform
+                dump(.15, .85); // dump cube
 
-            sleep(1000);
+                sleep(1000);
 
-            driveStraight(-.25,4500); // drive straig®ht to glyph, pushing the cube
+                dump(.7, .3); // reset platform
 
-            sleep(1000);
+                sleep(1000);
 
-            driveStraight(.25,200);
+                driveStraight(-.25, 4500); // drive straig®ht to glyph, pushing the cube
 
-            sleep(1000);
+                sleep(1000);
 
-            idle();
+                driveStraight(.25, 200);
 
-            break;
+                sleep(1000);
+
+                idle();
+
+                break;
+            }
+
+            else if(keyResult == "CENTER"){
+                //score glyph in center
+            }
+
+            else{
+                //score glyph in left because it usually works
+
+                driveStraight(-.15, 2000); // drive forward
+
+                sleep(1000);
+
+                driveStraight(.25, 700); // drive forward
+
+                sleep(1000);
+
+                driveStraight(-.25, 650); // drive forward
+
+                sleep(1000);
+
+                turn(-.25, 1600); // turn right towards glyph
+
+                dump(.15, .85); // dump cube
+
+                sleep(1000);
+
+                dump(.7, .3); // reset platform
+
+                sleep(1000);
+
+                driveStraight(-.25, 4500); // drive straig®ht to glyph, pushing the cube
+
+                sleep(1000);
+
+                driveStraight(.25, 200);
+
+                sleep(1000);
+
+                idle();
+
+                break;
+            }
 
         }
     }

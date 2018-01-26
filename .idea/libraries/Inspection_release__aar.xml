@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Inspection-release:@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Inspection-release.aar/386f1b8766e8fe36935f36e2131ec542/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Inspection-release.aar/386f1b8766e8fe36935f36e2131ec542/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Inspection-release.aar/fde0bd95332c45abb0e8170184397c34/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Inspection-release.aar/fde0bd95332c45abb0e8170184397c34/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
