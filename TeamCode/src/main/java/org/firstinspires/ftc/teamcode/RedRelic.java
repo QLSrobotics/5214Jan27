@@ -125,25 +125,8 @@ public class RedRelic extends LinearOpMode {
             sleep(1000);
             telemetry.update();
 
-            sleep(3000);
+            sleep(1000);
 
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-
-                telemetry.addLine("%s visible" + vuMark.toString());
-                telemetry.update();
-
-            }
-            else {
-                telemetry.addLine( "not visible");
-                telemetry.update();
-
-            }
-
-            telemetry.update();
-
-            sleep(3000);
-
-            telemetry.update();
 
             arm(.1); // put arm down
             sleep(2000);
@@ -169,12 +152,49 @@ public class RedRelic extends LinearOpMode {
 //keyresult
 
             String keyResult = vuMark.toString();
-            if(keyResult == "RIGHT"){
+            if(keyResult == "LEFT"){
                //score cube in left
-            }
-            else if(keyResult == "LEFT") {
+                telemetry.addLine("I'm going left");
+                telemetry.update();
 
-                driveStraight(-.15, 2000); // drive forward
+                driveStraight(-.15, 2500); // drive forward
+
+                sleep(1000);
+
+                driveStraight(.25, 700); // drive forward
+
+                sleep(1000);
+
+                driveStraight(-.25, 200); // drive forward
+
+                sleep(1000);
+
+                turn(-.25, 750); // turn right towards glyph
+
+                dump(.15, .85); // dump cube
+
+                sleep(1000);
+
+                dump(.7, .3); // reset platform
+
+                sleep(1000);
+
+                driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
+
+                sleep(1000);
+
+                driveStraight(.25, 250);
+
+                sleep(1000);
+
+                idle();
+                break;
+            }
+            else if(keyResult == "RIGHT") {
+                telemetry.addLine("I'm going right");
+                telemetry.update();
+
+                driveStraight(-.15, 2500); // drive forward
 
                 sleep(1000);
 
@@ -186,7 +206,7 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(1000);
 
-                turn(-.25, 1600); // turn right towards glyph
+                turn(-.25, 2000); // turn right towards glyph
 
                 dump(.15, .85); // dump cube
 
@@ -196,11 +216,11 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(1000);
 
-                driveStraight(-.25, 4500); // drive straig®ht to glyph, pushing the cube
+                driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
                 sleep(1000);
 
-                driveStraight(.25, 200);
+                driveStraight(.25, 250);
 
                 sleep(1000);
 
@@ -211,12 +231,9 @@ public class RedRelic extends LinearOpMode {
 
             else if(keyResult == "CENTER"){
                 //score glyph in center
-            }
-
-            else{
-                //score glyph in left because it usually works
-
-                driveStraight(-.15, 2000); // drive forward
+                telemetry.addLine("I'm going in the middle");
+                telemetry.update();
+                driveStraight(-.15, 2500); // drive forward
 
                 sleep(1000);
 
@@ -224,11 +241,11 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(1000);
 
-                driveStraight(-.25, 650); // drive forward
+                driveStraight(-.25, 950); // drive forward
 
                 sleep(1000);
 
-                turn(-.25, 1600); // turn right towards glyph
+                turn(-.25, 2000); // turn right towards glyph
 
                 dump(.15, .85); // dump cube
 
@@ -238,13 +255,27 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(1000);
 
-                driveStraight(-.25, 4500); // drive straig®ht to glyph, pushing the cube
+                driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
                 sleep(1000);
 
-                driveStraight(.25, 200);
+                driveStraight(.25, 250);
 
                 sleep(1000);
+
+                idle();
+
+                break;
+
+            }
+
+            else{
+                //score glyph in left because it usually works
+                telemetry.addLine("I'm going middle but didn't get a reading");
+                telemetry.update();
+
+                sleep(1000);
+
 
                 idle();
 
