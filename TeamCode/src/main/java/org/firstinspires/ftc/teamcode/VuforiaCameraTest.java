@@ -19,7 +19,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 @TeleOp(name="VuforiaCameraTest", group ="Team11920")
-@Disabled
 public class VuforiaCameraTest extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
@@ -50,7 +49,7 @@ public class VuforiaCameraTest extends LinearOpMode {
 
         //chose the back camera
         //can also use the front camera by changing "BACK" to "FRONT"
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");

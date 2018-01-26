@@ -44,6 +44,7 @@ public class RedRelic extends LinearOpMode {
     private String colorid;
     // declare color sensor
     private ColorSensor colorFront;
+    private DcMotor ramp;
 
     //use the two variables in two color sensors situation
 //    ColorSensor colorFront;
@@ -86,6 +87,9 @@ public class RedRelic extends LinearOpMode {
         leftDump  = hardwareMap.get(Servo.class, "LD");
         rightDump = hardwareMap.get(Servo.class, "RD");
 
+        ramp = hardwareMap.dcMotor.get("ramp");
+
+
         //mapping color servo to configuration
         colorServo = hardwareMap.get(Servo.class, "COLORSERVO");
         flickServo = hardwareMap.get(Servo.class, "FLICKSERVO");
@@ -117,14 +121,17 @@ public class RedRelic extends LinearOpMode {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
-                telemetry.addData("VuMark", "%s visible", vuMark);
+                telemetry.addLine("%s visible" + vuMark.toString());
+                telemetry.update();
 
             }
             else {
-                telemetry.addData("VuMark", "not visible");
+                telemetry.addLine( "not visible");
+                telemetry.update();
+
             }
 
-            telemetry.update();
+
 
             sleep(3000);
 
@@ -146,7 +153,11 @@ public class RedRelic extends LinearOpMode {
             arm(.9); // put arm up
             sleep(1500);
 
-            driveStraight(-.25,1500); // drive forward
+            ramp.setPower(.25);
+            sleep(500);
+            ramp.setPower(0);
+
+            driveStraight(-.15,2000); // drive forward
 
             sleep(1000);
 
@@ -154,11 +165,11 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(-.25,600); // drive forward
+            driveStraight(-.25,650); // drive forward
 
             sleep(1000);
 
-            turn(-.25,900); // turn right towards glyph
+            turn(-.25,1600); // turn right towards glyph
 
             dump(.15,.85); // dump cube
 
@@ -168,7 +179,7 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(-.25,1000); // drive straig®ht to glyph, pushing the cube
+            driveStraight(-.25,4500); // drive straig®ht to glyph, pushing the cube
 
             sleep(1000);
 
@@ -309,5 +320,43 @@ public class RedRelic extends LinearOpMode {
 //    driveStraight(.25,200);
 //
 //    sleep(1000);
+//
+//    idle();
+
+
+
+
+
+// this works for left ussaly
+//
+//    driveStraight(-.25,1500); // drive forward
+//
+//    sleep(1000);
+//
+//    driveStraight(.25,700); // drive forward
+//
+//    sleep(1000);
+//
+//    driveStraight(-.25,600); // drive forward
+//
+//    sleep(1000);
+//
+//    turn(-.25,900); // turn right towards glyph
+//
+//    dump(.15,.85); // dump cube
+//
+//    sleep(1000);
+//
+//    dump(.7,.3); // reset platform
+//
+//    sleep(1000);
+//
+//    driveStraight(-.25,1000); // drive straig®ht to glyph, pushing the cube
+//
+//    sleep(1000);
+//
+//    driveStraight(.25,200);
+//
+//    sleep(30000);
 //
 //    idle();
