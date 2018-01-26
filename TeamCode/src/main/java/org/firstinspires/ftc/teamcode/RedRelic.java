@@ -44,6 +44,7 @@ public class RedRelic extends LinearOpMode {
     private String colorid;
     // declare color sensor
     private ColorSensor colorFront;
+    private DcMotor ramp;
 
     //use the two variables in two color sensors situation
 //    ColorSensor colorFront;
@@ -67,10 +68,11 @@ public class RedRelic extends LinearOpMode {
                 "8BXdVvs+mpDLQ4tH/XL5ikYp1++1fbYhJtA3naS5/laHiPiHONGAdLbHkE4s8EOxpB8+lqpJN6hlcqtMegarTOuwWYXXP" +
                 "jSnNnkUWBKuW6nWqtF3k1CIUoSTBuFpbwAvf+T6i1CkL6IoB";
         //using back camera for recognizing
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
 
         //importing the three image asset and hook up to vuforia engine
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
+
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
@@ -85,6 +87,9 @@ public class RedRelic extends LinearOpMode {
         //mapping dump servos to configuration
         leftDump  = hardwareMap.get(Servo.class, "LD");
         rightDump = hardwareMap.get(Servo.class, "RD");
+
+        ramp = hardwareMap.dcMotor.get("ramp");
+
 
         //mapping color servo to configuration
         colorServo = hardwareMap.get(Servo.class, "COLORSERVO");
@@ -109,25 +114,36 @@ public class RedRelic extends LinearOpMode {
 
         runtime.reset();
 
+
         // run until the end of the match (driver presses STOP)h
 
         while (opModeIsActive()){
-
-
+            sleep(1000);
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            sleep(1000);
+            telemetry.addLine(vuMark.toString());
+            sleep(1000);
+            telemetry.update();
+
+            sleep(3000);
+
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
-                telemetry.addData("VuMark", "%s visible", vuMark);
+                telemetry.addLine("%s visible" + vuMark.toString());
+                telemetry.update();
 
             }
             else {
-                telemetry.addData("VuMark", "not visible");
+                telemetry.addLine( "not visible");
+                telemetry.update();
+
             }
 
             telemetry.update();
 
             sleep(3000);
 
+            telemetry.update();
 
             arm(.1); // put arm down
             sleep(2000);
@@ -137,26 +153,32 @@ public class RedRelic extends LinearOpMode {
             telemetry.addLine(colorid);
             telemetry.update();
 
-            sleep(2000);
+            sleep(1000);
 
-            if (colorid == "RED"){flicker(1);
-            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(0);}
+            if (colorid == "RED"){flicker(0);
+            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
 
-            sleep(2000);
+            sleep(1000);
             arm(.9); // put arm up
-            sleep(2000);
+            sleep(1500);
 
-            driveStraight(-.25,1000); // drive forward
+            ramp.setPower(.25);
+            sleep(500);
+            ramp.setPower(0);
+
+            driveStraight(-.15,2000); // drive forward
+
+            sleep(1000);
+
+            driveStraight(.25,700); // drive forward
 
             sleep(1000);
 
-            turn(-.25,2000); // turn right towards glyph
+            driveStraight(-.25,650); // drive forward
 
             sleep(1000);
 
-            driveStraight(-.25,1500); // drive straight to glyph
-
-            sleep(1000);
+            turn(-.25,1600); // turn right towards glyph
 
             dump(.15,.85); // dump cube
 
@@ -166,10 +188,22 @@ public class RedRelic extends LinearOpMode {
 
             sleep(1000);
 
-            driveStraight(-.25,200);
+            driveStraight(-.25,4500); // drive straig®ht to glyph, pushing the cube
+
+            sleep(1000);
+
+            driveStraight(.25,200);
+
+            sleep(1000);
+
+            idle();
+
+            break;
 
         }
     }
+
+
     private void driveStraight (double power, int time) {
         leftBack.setPower(power);
         rightBack.setPower(power);
@@ -268,3 +302,72 @@ public class RedRelic extends LinearOpMode {
 //        }
 //    }
 }
+
+//we think this works for center
+
+//
+//    sleep(1000);
+//    arm(.9); // put arm up
+//    sleep(1500);
+//
+//    driveStraight(-.25,1000); // drive forward
+//
+//    sleep(1000);
+//
+//    turn(-.25,900); // turn right towards glyph
+//
+//    dump(.15,.85); // dump cube
+//
+//    sleep(1000);
+//
+//    dump(.7,.3); // reset platform
+//
+//    sleep(1000);
+//
+//    driveStraight(-.25,1000); // drive straight to glyph, pushing the cube
+//
+//    sleep(1000);
+//
+//    driveStraight(.25,200);
+//
+//    sleep(1000);
+//
+//    idle();
+
+
+
+
+
+// this works for left ussaly
+//
+//    driveStraight(-.25,1500); // drive forward
+//
+//    sleep(1000);
+//
+//    driveStraight(.25,700); // drive forward
+//
+//    sleep(1000);
+//
+//    driveStraight(-.25,600); // drive forward
+//
+//    sleep(1000);
+//
+//    turn(-.25,900); // turn right towards glyph
+//
+//    dump(.15,.85); // dump cube
+//
+//    sleep(1000);
+//
+//    dump(.7,.3); // reset platform
+//
+//    sleep(1000);
+//
+//    driveStraight(-.25,1000); // drive straig®ht to glyph, pushing the cube
+//
+//    sleep(1000);
+//
+//    driveStraight(.25,200);
+//
+//    sleep(30000);
+//
+//    idle();
