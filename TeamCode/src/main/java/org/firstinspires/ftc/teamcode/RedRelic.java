@@ -129,12 +129,12 @@ public class RedRelic extends LinearOpMode {
 
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 
-                telemetry.addLine("%s visible" + vuMark.toString());
+                telemetry.addLine(vuMark.toString());
                 telemetry.update();
 
             }
             else {
-                telemetry.addLine( "not visible");
+                telemetry.addLine(vuMark.toString());
                 telemetry.update();
 
             }
