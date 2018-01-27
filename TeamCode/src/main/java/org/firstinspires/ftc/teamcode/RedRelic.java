@@ -108,6 +108,8 @@ public class RedRelic extends LinearOpMode {
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
 
+        flickServo.setPosition(.49);
+
         waitForStart();
         //enable image tracking
         relicTrackables.activate();
@@ -118,14 +120,11 @@ public class RedRelic extends LinearOpMode {
         // run until the end of the match (driver presses STOP)h
 
         while (opModeIsActive()){
-            sleep(1000);
+            sleep(2500);
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            sleep(300);
+            sleep(200);
             telemetry.addLine(vuMark.toString());
-            sleep(300);
             telemetry.update();
-
-            sleep(300);
 
 
             arm(.2); // put arm down
@@ -136,7 +135,7 @@ public class RedRelic extends LinearOpMode {
             telemetry.addLine(colorid);
             telemetry.update();
 
-            sleep(300);
+            sleep(200);
 
             if (colorid == "RED"){flicker(0);
             }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
@@ -159,31 +158,31 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(-.15, 2500); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 700); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 200); // drive forward
 
-                sleep(800);
+                sleep(600);
 
-                turn(-.25, 550); // turn right towards glyph
+                turn(-.25, 650); // turn right towards glyph
 
                 sleep(700);
 
                 dump(.15, .85); // dump cube
 
-                sleep(800);
+                sleep(600);
 
                 dump(.7, .3); // reset platform
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 400);
 
@@ -195,7 +194,7 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(.25, 250);
 
-                sleep(800);
+                sleep(200);
 
                 idle();
 
@@ -207,15 +206,15 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(-.15, 2500); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 700); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 650); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 turn(-.25, 1600); // turn right towards glyph
 
@@ -223,15 +222,15 @@ public class RedRelic extends LinearOpMode {
 
                 dump(.15, .85); // dump cube
 
-                sleep(800);
+                sleep(600);
 
                 dump(.7, .3); // reset platform
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 400);
 
@@ -243,7 +242,7 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(.25, 250);
 
-                sleep(800);
+                sleep(600);
 
                 idle();
 
@@ -256,31 +255,31 @@ public class RedRelic extends LinearOpMode {
                 telemetry.update();
                 driveStraight(-.15, 2500); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 700); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 850); // drive forward
 
-                sleep(800);
+                sleep(600);
 
-                turn(-.25, 1900); // turn right towards glyph
+                turn(-.25, 1600); // turn right towards glyph
 
                 sleep(700);
 
                 dump(.15, .85); // dump cube
 
-                sleep(800);
+                sleep(600);
 
                 dump(.7, .3); // reset platform
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 400);
 
@@ -292,7 +291,7 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(.25, 250);
 
-                sleep(800);
+                sleep(200);
 
                 idle();
 
@@ -307,31 +306,31 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(-.15, 2500); // drive forward
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 700); // drive forward
 
-                sleep(800);
+                sleep(600);
 
-                driveStraight(-.25, 950); // drive forward
+                driveStraight(-.25, 850); // drive forward
 
-                sleep(800);
+                sleep(600);
 
-                turn(-.25, 2000); // turn right towards glyph
+                turn(-.25, 1600); // turn right towards glyph
 
                 sleep(700);
 
                 dump(.15, .85); // dump cube
 
-                sleep(800);
+                sleep(600);
 
                 dump(.7, .3); // reset platform
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(-.25, 2500); // drive straig®ht to glyph, pushing the cube
 
-                sleep(800);
+                sleep(600);
 
                 driveStraight(.25, 400);
 
@@ -343,7 +342,7 @@ public class RedRelic extends LinearOpMode {
 
                 driveStraight(.25, 250);
 
-                sleep(800);
+                sleep(200);
 
                 idle();
 
