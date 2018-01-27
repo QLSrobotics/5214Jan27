@@ -118,7 +118,7 @@ public class RedRelic extends LinearOpMode {
         // run until the end of the match (driver presses STOP)h
 
         while (opModeIsActive()){
-            sleep(500);
+            sleep(1000);
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             sleep(300);
             telemetry.addLine(vuMark.toString());
@@ -169,7 +169,7 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(800);
 
-                turn(-.25, 600); // turn right towards glyph
+                turn(-.25, 550); // turn right towards glyph
 
                 sleep(700);
 
@@ -217,7 +217,7 @@ public class RedRelic extends LinearOpMode {
 
                 sleep(800);
 
-                turn(-.25, 1650); // turn right towards glyph
+                turn(-.25, 1600); // turn right towards glyph
 
                 sleep(700);
 
