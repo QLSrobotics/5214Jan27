@@ -42,8 +42,6 @@ public class gyroTurn extends LinearOpMode {
     Orientation angles;
     Orientation angles2;
     Acceleration gravity;
-    String variable;
-    String variable2;
 
     private DcMotor leftBack;
     private DcMotor rightBack;
@@ -89,19 +87,13 @@ public class gyroTurn extends LinearOpMode {
 
         // Start the logging of measured acceleration
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         angles2   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        telemetry.addLine(variable)
-                .addData("Variable", new Func<String>() {
-                    @Override public String value() {
-                        return formatAngle(angles.angleUnit, angles.firstAngle);
-                    }
-                });
-        telemetry.addLine(variable);
         // Loop and update the dashboard
         while (opModeIsActive()) {
-            variable = formatAngle(angles2.angleUnit, angles2.firstAngle);
-            variable2 = variable;
+            turnLeftDegress(50);
+            sleep(5000);
             telemetry.update();
         }
     }
@@ -171,8 +163,8 @@ public class gyroTurn extends LinearOpMode {
 
     private void turn(double power, int time){
         //left turn is positive power
-        leftBack.setPower(-power); //sets left wheels to move backward
-        leftFront.setPower(-power);
+        leftBack.setPower(power); //sets left wheels to move backward
+        leftFront.setPower(power);
         rightBack.setPower(power); // makes right hand wheels to move forward
         rightFront.setPower(power);
         sleep(time);
@@ -181,6 +173,27 @@ public class gyroTurn extends LinearOpMode {
         leftFront.setPower(0);
         rightBack.setPower(0);
         rightFront.setPower(0);
+    }
+
+    private void turnLeftDegress(double deg){
+        Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+        double start = curent;
+        double stDeg = curent+deg;
+        while (((curent) < (stDeg-1)) || (curent > (stDeg+1) )){
+            telemetry.update();
+            telemetry.addLine("IM IN THE WHILE");
+            telemetry.addLine("start: " + Double.toString(start));
+            telemetry.addLine("stDeg: " + Double.toString(stDeg));
+            telemetry.addLine("deg: " + Double.toString(deg));
+            telemetry.addLine("current: " + Double.toString(curent));
+            turn(.5,100);
+            agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+            telemetry.update();
+        }
+        telemetry.addLine("I LEFT THE WHILE");
+        telemetry.update();
     }
 
     //----------------------------------------------------------------------------------------------
