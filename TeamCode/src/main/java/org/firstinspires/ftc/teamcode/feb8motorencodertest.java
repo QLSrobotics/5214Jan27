@@ -87,9 +87,9 @@ public class feb8motorencodertest extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             testMotor.setPower(.25);
-            int ticks = testMotor.getCurrentPosition();
-            telemetry.addData("Ticks: ", ticks);
-            telemetry.addData("Revolutions: ", ticks / 1120);
+            int ticks = testMotor.getCurrentPosition(); //set ticks to current position of encoder
+            telemetry.addData("Ticks: ", ticks); //print ticks
+            telemetry.addData("Revolutions: ", ticks / 1120); //print revolutions
             telemetry.update();
             sleep(100);
 
