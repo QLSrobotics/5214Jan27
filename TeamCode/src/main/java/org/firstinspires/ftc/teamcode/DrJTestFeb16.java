@@ -155,28 +155,15 @@ public class DrJTestFeb16 extends LinearOpMode {
             telemetry.addData("Right Back: ", rightBack.getCurrentPosition());
             telemetry.update();
 
-            straightWithEncoder(.5,25);
-
-            telemetry.update();
-
-sleep(1500);
-
-            straightWithEncoder(.5,-15);
-
-            telemetry.update();
-
-sleep(1500);
-
-            strafeWithEncoder(.5,25);
-
-
-sleep(1500);
-
-            turnLeftDegress(50);
+            straightWithEncoder(.5,15);
 
             sleep(1500);
 
-            straightWithEncoder(.5,-15);
+            turnLeftDegress(90);
+
+            sleep(1500);
+
+            straightWithEncoder(.5,15);
 
             telemetry.update();
 
@@ -216,14 +203,14 @@ sleep(1500);
     private void straightWithEncoder(double strength, int straightInches){
 
         leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         motorWithEncoder(leftBack, strength, straightInches);
-      motorWithEncoder(leftFront, strength, straightInches);
-      motorWithEncoder(rightBack, strength, straightInches);
-      motorWithEncoder(rightFront, strength, straightInches);
+        motorWithEncoder(leftFront, strength, straightInches);
+        motorWithEncoder(rightBack, strength, straightInches);
+        motorWithEncoder(rightFront, strength, straightInches);
 
       while(leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy()) {
       }
@@ -342,18 +329,18 @@ sleep(1500);
                 });
     }
 
-    private void turn(double power, int time){
+    private void turn(double power/*, int time*/){
         //left turn is positive power
         leftBack.setPower(-power); //sets left wheels to move backward
         leftFront.setPower(-power);
         rightBack.setPower(power); // makes right hand wheels to move forward
         rightFront.setPower(power);
-        sleep(time);
+//        sleep(time);
         //those things happen for this amount of time and then all the wheels stop
-        leftBack.setPower(0);
-        leftFront.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
+//        leftBack.setPower(0);
+//        leftFront.setPower(0);
+//        rightBack.setPower(0);
+//        rightFront.setPower(0);
     }
 
     private void turnLeftDegress(double deg){
@@ -366,7 +353,7 @@ sleep(1500);
         double curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
         double start = curent;
         double stDeg = curent+deg;
-        while (((curent) < (stDeg-1)) || (curent > (stDeg+1) )){
+        while (((curent) < (stDeg-1.5)) || (curent > (stDeg+1.5) )){
             telemetry.update();
 
             telemetry.addLine("IM IN THE WHILE");
@@ -374,7 +361,16 @@ sleep(1500);
             telemetry.addLine("stDeg: " + Double.toString(stDeg));
             telemetry.addLine("deg: " + Double.toString(deg));
             telemetry.addLine("current: " + Double.toString(curent));
-            turn(.5,100);
+
+            turn(.25);
+
+//            if ((curent) < (stDeg-1)) {
+//                turn(.5, 100);
+//            }
+//
+//            if ((curent) > (stDeg+1)) {
+//                turn(-.5, 100);
+//            }
 
             agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
