@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="manual_2_crtls", group="Team5214")
-//@Disabled
+@Disabled
 public class manual_2_crtls extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();

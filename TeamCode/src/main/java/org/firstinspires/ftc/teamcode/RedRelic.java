@@ -23,7 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 @Autonomous(name="RedRelic", group="Relic")
-//@Disabled
+@Disabled
 public class RedRelic extends LinearOpMode {
 
     //declare vuforia recognizing engine

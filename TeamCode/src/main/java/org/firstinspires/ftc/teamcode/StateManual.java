@@ -39,6 +39,9 @@ public class StateManual extends LinearOpMode {
     private DigitalChannel limtTop;
     private DigitalChannel limtBot;
 
+    private int ticks;
+    private int position2move2;
+
 
     boolean limtHit = true;
     boolean go;
@@ -79,15 +82,15 @@ public class StateManual extends LinearOpMode {
         align.setPosition(0);
 
         knckSer.setPosition(.5);
-        colSer.setPosition(.9);
+        colSer.setPosition(.2);
 
         waitForStart();
 
 
         while (opModeIsActive()) {
 
-            colSer.setPosition(.9);
-            knckSer.setPosition(.5);
+            colSer.setPosition(.2);
+           // knckSer.setPosition(.5);
             //game pad one cotrls
 
             if (gamepad1.dpad_up) {
@@ -109,7 +112,7 @@ public class StateManual extends LinearOpMode {
 
             if (gamepad1.right_bumper) {
                 lDum.setPosition(0.8);
-                rDum.setPosition(.21);
+                rDum.setPosition(.2);
                 sleep(500);
                 cDum.setPosition(0.7);
                 lBelt.setPower(1);
@@ -124,14 +127,20 @@ public class StateManual extends LinearOpMode {
             if (gamepad1.left_bumper) {
                 cDum.setPosition(0.25);
                 lDum.setPosition(0.26);
-                rDum.setPosition(0.77);
+                rDum.setPosition(0.74);
             }
             if (gamepad1.a) {
-                lDum.setPosition(0.53);
+                lDum.setPosition(0.51);
                 rDum.setPosition(0.5);
                 cDum.setPosition(0.7);
                 lBelt.setPower(0);
                 rBelt.setPower(0);
+            }
+            if (gamepad1.x){
+                motorWithEncoder(liftMotor,.5,8);
+            }
+            if (gamepad1.b){
+                motorWithEncoder(liftMotor,-.5,8);
             }
 
             if (gamepad2.left_trigger >= 0.05) {
@@ -165,34 +174,33 @@ public class StateManual extends LinearOpMode {
             }
 
             telemetry.update();
-            leftBack.setPower(.9*((gamepad1.left_stick_y + gamepad1.left_stick_x) + (.75 * -(gamepad1.right_stick_x))
-                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)-gamepad2.right_stick_x));
+            leftBack.setPower(.9*((gamepad1.left_stick_y + gamepad1.left_stick_x + (.5*gamepad1.right_stick_y)) + (.75 * -(gamepad1.right_stick_x))
+                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)));
 
-            leftFront.setPower(.9*((gamepad1.left_stick_y - gamepad1.left_stick_x) + (.75 * -(gamepad1.right_stick_x))
-                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger)-gamepad2.right_stick_x));
+            leftFront.setPower(.9*((gamepad1.left_stick_y - gamepad1.left_stick_x+ (.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger))));
 
-            rightBack.setPower(.9*((-gamepad1.left_stick_y + gamepad1.left_stick_x) + (.75 * -(gamepad1.right_stick_x))
-                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)-gamepad2.right_stick_x));
+            rightBack.setPower(.9*((-gamepad1.left_stick_y + gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger))));
 
-            rightFront.setPower(.9*((-gamepad1.left_stick_y - gamepad1.left_stick_x) + (.75 * -(gamepad1.right_stick_x))
-                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger) -gamepad2.right_stick_x));
+            rightFront.setPower(.9*((-gamepad1.left_stick_y - gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger))));
 
-            if (gamepad1.dpad_up) {
-                lBelt.setPower(-.75);
-                rBelt.setPower(.75);
-            }
-            if (gamepad1.dpad_down) {
-                lBelt.setPower(.75);
-                rBelt.setPower(-0.75);
-            }
-            if (gamepad1.dpad_left) {
-                colSer.setPosition(.9);
-                knckSer.setPosition(.5);
-            }
-            if (gamepad1.dpad_right) {
-                lBelt.setPower(0);
-                rBelt.setPower(0);
-            }
+
+
         }
+    }
+
+
+    private void motorWithEncoder(DcMotor motorName, double power, int inches) {
+        ticks = (int) (inches * 1120 / (4 * 3.14159)); //converts inches to ticks
+//        telemetry.addData("ticks: ", ticks);
+        telemetry.update();
+
+        //modifies moveto position based on starting ticks position, keeps running tally
+        position2move2 = motorName.getCurrentPosition() + ticks;
+        motorName.setTargetPosition(position2move2);
+        motorName.setPower(power);
+
     }
 }

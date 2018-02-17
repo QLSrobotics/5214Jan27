@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="feb8motorencodertest", group="Team5214")
-//@Disabled
+@Disabled
 public class feb8motorencodertest extends LinearOpMode {
 
     // Declare OpMode members.

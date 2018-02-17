@@ -243,6 +243,12 @@ String keyResult = "LEFT";
                 //dump(.26,.74);
 
                 sleep(1000);
+
+                centerDump.setPosition(.7);
+                dump(.8,.2);
+
+                sleep(1000);
+
                 straightWithEncoder(.3,-9);
 
                 straightWithEncoder(.3,5);

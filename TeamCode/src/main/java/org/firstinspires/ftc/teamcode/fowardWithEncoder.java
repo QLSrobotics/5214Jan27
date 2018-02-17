@@ -51,8 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="forwardWithEncoder", group="Team5214")
-//@Disabled
-public class fowardWithEncoder extends LinearOpMode {
+@Disabled public class fowardWithEncoder extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
