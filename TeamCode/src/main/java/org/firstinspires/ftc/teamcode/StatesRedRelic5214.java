@@ -46,7 +46,8 @@ public class StatesRedRelic5214 extends LinearOpMode{
     private double angel;
     // The IMU sensor object
     BNO055IMU imu;
-
+    private DcMotor lBelt;
+    private DcMotor rBelt;
     private Servo leftDump;
     private Servo rightDump;
     // declare color servo
@@ -106,6 +107,8 @@ public class StatesRedRelic5214 extends LinearOpMode{
         leftDump  = hardwareMap.get(Servo.class, "LD");
         rightDump = hardwareMap.get(Servo.class, "RD");
 
+        lBelt = hardwareMap.dcMotor.get("LBELT");
+        rBelt = hardwareMap.dcMotor.get("RBELT");
 
         //mapping color servo to configuration
         colorServo = hardwareMap.get(Servo.class, "COLORSERVO");
@@ -156,7 +159,7 @@ public class StatesRedRelic5214 extends LinearOpMode{
         // Wait for the game to start (driver presses PLAY)
 
         waitForStart();
-
+        relicTrackables.activate();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
         angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         angles2   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -165,35 +168,33 @@ public class StatesRedRelic5214 extends LinearOpMode{
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            sleep(200);
+//            sleep(200);
+//
+//            arm(.2); // put arm down
+//            sleep(1500);
 
-            arm(.2); // put arm down
-            sleep(1700);
-
-            colorid = checkColor(colorFront, currentRatio);
-
-            telemetry.addLine(colorid);
-            telemetry.update();
-
-            sleep(200);
+//            colorid = checkColor(colorFront, currentRatio);
+//
+//            telemetry.addLine(colorid);
+//            telemetry.update();
+//
+//            sleep(200);
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            sleep(200);
+            sleep(100);
             telemetry.addLine(vuMark.toString());
             telemetry.update();
 
-            sleep(200);
-
-            if (colorid == "RED"){flicker(0);
-            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
-
-            sleep(300);
-            arm(.8); // put arm up
-            sleep(1500);
+//            if (colorid == "RED"){flicker(0);
+//            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
+//
+//            sleep(300);
+//            arm(.8); // put arm up
+//            sleep(1500);
 
 //keyresult
 
-            String keyResult = vuMark.toString();
+//            String keyResult = vuMark.toString();
 
             telemetry.addData("Left Front: ", leftFront.getCurrentPosition());
             telemetry.addData("Left Back: ", leftBack.getCurrentPosition());
@@ -201,37 +202,88 @@ public class StatesRedRelic5214 extends LinearOpMode{
             telemetry.addData("Right Back: ", rightBack.getCurrentPosition());
             telemetry.update();
 
-
+            String keyResult = "LEFT";
 
 
             if(keyResult == "LEFT"){
 
-                straightWithEncoder(.75, -25);
+                straightWithEncoder(.3, -22);
+                straightWithEncoder(.3, 3);
+                straightWithEncoder(.5, -23);
 
                 turnRightDegrees(60, parameters);
 
                 //   DUMP HERE
 
-                straightWithEncoder(.75,-20);
+                straightWithEncoder(.6,-10);
 
-                straightWithEncoder(.75,10);
-                straightWithEncoder(.75,-14);
+                straightWithEncoder(.6,5);
+                straightWithEncoder(.6,-6);
+                straightWithEncoder(.6,5);
 
+                Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                double TurnAmount = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)) + 30;
+
+                if (TurnAmount < 0) {
+                     turnLeftDegress(-TurnAmount, parameters);
+                    }
+                    else if(TurnAmount>0){
+                    turnRightDegrees(TurnAmount, parameters);
+                }
+
+                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                leftBack.setPower(1);
+                leftFront.setPower(1);
+                rightBack.setPower(1);
+                rightFront.setPower(1);
+                sleep(300);
+                leftBack.setPower(-1);
+                leftFront.setPower(-1);
+                rightBack.setPower(-1);
+                rightFront.setPower(-1);
+
+                sleep(300);
+                leftBack.setPower(0);
+                leftFront.setPower(0);
+                rightBack.setPower(0);
+                rightFront.setPower(0);
+
+                lBelt.setPower(1);
+                rBelt.setPower(-1);
+
+                straightWithEncoder(.6,30);
+                //INTAKE THOSE CUBES AND GO BACKWARDS
+                straightWithEncoder(.6,-17);
+                turnRightDegrees(15, parameters);
+                //DUMP THE CUBE
+                straightWithEncoder(.6,-15);
+                straightWithEncoder(.6,6);
+                straightWithEncoder(.6,-9);
+                straightWithEncoder(.6,4);
 
             }else if(keyResult == "CENTER"){
 
             }else if (keyResult == "RIGHT"){
 
             }else{
+                straightWithEncoder(.5, -25);
 
+                turnRightDegrees(60, parameters);
+
+                //   DUMP HERE
+
+                straightWithEncoder(.5,-20);
+
+                straightWithEncoder(.5,10);
+                straightWithEncoder(.5,-14);
             }
 
 
             telemetry.update();
-
-            sleep(1500);
-
-
 
             leftBack.setPower(0);
             rightBack.setPower(0);
@@ -242,8 +294,6 @@ public class StatesRedRelic5214 extends LinearOpMode{
             leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            sleep(15000);
 
             break;
         }
