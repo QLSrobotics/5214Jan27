@@ -151,19 +151,23 @@ public class drivingFeb16 extends LinearOpMode {
 
             sleep(2000);
 
-            correctTurnFunction("clockwise", .25, 90);
+            straightWithEncoder(.5,24);
+
+            sleep(500);
+
+            turnLeftDegress(90, parameters);
+
+            sleep(500);
+
+            straightWithEncoder(0.25, -15);
+
+            turnRightDegrees(90, parameters);
 
             sleep(2000);
 
-            correctTurnFunction("clockwise", .25, 270);
+            strafeWithEncoder(.4, 15);
 
             sleep(2000);
-
-            correctTurnFunction("clockwise", .25, 0);
-
-            sleep(2000);
-
-            correctTurnFunction("clockwise", .25, 180);
 
 
             //straightWithEncoder(.5,15);
@@ -334,139 +338,76 @@ public class drivingFeb16 extends LinearOpMode {
                 });
     }
 
-    private double convertTo0to360(double angle1){
-
-        if(angle1 >= 0){
-            angel = angle1;
-        }
-        else{
-            angel = angle1 + 360;
-        }
-
-        angel = angel % 360;
-
-        return angel;
-
-    }
-
-    private void correctTurnFunction(String direction, double power, int targetAngle){
-        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-        double current = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-        current = convertTo0to360(current);
-        double start = current;
-        targetAngle += start;
-        targetAngle = targetAngle % 360;
-        telemetry.addLine(Double.toString(targetAngle));
-        telemetry.update();
-
-        if(direction == "clockwise"){
-            while (((current) < (targetAngle-2)) || (current > (targetAngle+2) )){
-                double whereiam;
-                telemetry.addLine("raw encoder values: " + Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)));
-
-                //telemetry.addLine("modified encoder value: " + current);
-                //telemetry.update();
-
-                leftBack.setPower(power); //sets left wheels to move backward
-                leftFront.setPower(power);
-                rightBack.setPower(-power); // makes right hand wheels to move forward
-                rightFront.setPower(-power);
-
-                agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-                whereiam = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-                whereiam = whereiam * -1;
-                current = convertTo0to360(whereiam);
-            }
-        }
-
-        if(direction == "counterclockwise"){
-            while (((current) < (targetAngle-2)) || (current > (targetAngle+2) )){
-                double whereiam;
-                telemetry.addLine("raw encoder values: " + Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)));
-
-                //telemetry.addLine("modified encoder value: " + current);
-                //telemetry.update();
-
-                leftBack.setPower(-power); //sets left wheels to move backward
-                leftFront.setPower(-power);
-                rightBack.setPower(power); // makes right hand wheels to move forward
-                rightFront.setPower(power);
-
-                agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-
-                whereiam = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-                current = convertTo0to360(whereiam);
-        }
-
-        leftBack.setPower(0);
-        rightBack.setPower(0);
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-    }}
-
-//    private void turn(double power){
-//        //left turn is positive power
-//        leftBack.setPower(-power); //sets left wheels to move backward
-//        leftFront.setPower(-power);
-//        rightBack.setPower(power); // makes right hand wheels to move forward
-//        rightFront.setPower(power);
+//    private double convertTo0to360(double angle1){
 //
-//        //makes the robot go forward for an indefinite amount of time
+//        if(angle1 >= 0){
+//            angel = angle1;
+//        }
+//        else{
+//            angel = angle1 + 360;
+//        }
+//
+//        angel = angel % 360;
+//
+//        return angel;
 //
 //    }
-//
-//    private void turnLeftDegress(double deg){
-//
-//
-//
+
+//    private void correctTurnFunction(String direction, double power, int targetAngle){
 //        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //
 //        Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//        double curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-//        double start = curent;
-//        double stDeg = curent+deg;
 //
-//        //this loop runs until the robot has turned the correct amount
-//        while (((curent) < (stDeg-1.5)) || (curent > (stDeg+1.5) )){
-//            telemetry.update();
+//        double current = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+//        current = convertTo0to360(current);
+//        double start = current;
+//        targetAngle += start;
+//        targetAngle = targetAngle % 360;
+//        telemetry.addLine(Double.toString(targetAngle));
+//        telemetry.update();
 //
-//            //prints all the variables
-//            telemetry.addLine("IM IN THE WHILE");
-//            telemetry.addLine("start: " + Double.toString(start));
-//            telemetry.addLine("stDeg: " + Double.toString(stDeg));
-//            telemetry.addLine("deg: " + Double.toString(deg));
-//            telemetry.addLine("current: " + Double.toString(curent));
+//        if(direction == "clockwise"){
+//            while (((current) < (targetAngle-2)) || (current > (targetAngle+2) )){
+//                double whereiam;
+//                telemetry.addLine("raw encoder values: " + Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)));
 //
-//            turn(.25);
+//                //telemetry.addLine("modified encoder value: " + current);
+//                //telemetry.update();
 //
-//            agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//            curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-//            telemetry.update();
+//                leftBack.setPower(power); //sets left wheels to move backward
+//                leftFront.setPower(power);
+//                rightBack.setPower(-power); // makes right hand wheels to move forward
+//                rightFront.setPower(-power);
+//
+//                agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//
+//                whereiam = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+//                whereiam = whereiam * -1;
+//                current = convertTo0to360(whereiam);
+//            }
 //        }
 //
-//        telemetry.addLine("I LEFT THE WHILE");
-//        telemetry.update();
+//        if(direction == "counterclockwise"){
+//            while (((current) < (targetAngle-2)) || (current > (targetAngle+2) )){
+//                double whereiam;
+//                telemetry.addLine("raw encoder values: " + Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)));
+//
+//                //telemetry.addLine("modified encoder value: " + current);
+//                //telemetry.update();
+//
+//                leftBack.setPower(-power); //sets left wheels to move backward
+//                leftFront.setPower(-power);
+//                rightBack.setPower(power); // makes right hand wheels to move forward
+//                rightFront.setPower(power);
+//
+//                agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//
+//                whereiam = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+//                current = convertTo0to360(whereiam);
+//        }
 //
 //        leftBack.setPower(0);
 //        rightBack.setPower(0);
@@ -482,7 +423,122 @@ public class drivingFeb16 extends LinearOpMode {
 //        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
 //    }
+
+    private void turn(double power){
+        //left turn is positive power
+        leftBack.setPower(-power); //sets left wheels to move backward
+        leftFront.setPower(-power);
+        rightBack.setPower(power); // makes right hand wheels to move forward
+        rightFront.setPower(power);
+
+        //makes the robot go forward for an indefinite amount of time
+
+    }
+
+    private void turnLeftDegress(double deg, BNO055IMU.Parameters parametersMeth){
+
+
+
+        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+        double start = curent;
+        double stDeg = curent+deg;
+
+        //this loop runs until the robot has turned the correct amount
+        while (((curent) < (stDeg-1.5)) || (curent > (stDeg+1.5) )){
+            telemetry.update();
+
+            //prints all the variables
+            telemetry.addLine("IM IN THE WHILE");
+            telemetry.addLine("start: " + Double.toString(start));
+            telemetry.addLine("stDeg: " + Double.toString(stDeg));
+            telemetry.addLine("deg: " + Double.toString(deg));
+            telemetry.addLine("current: " + Double.toString(curent));
+
+            turn(.25);
+
+            agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+            telemetry.update();
+        }
+
+        telemetry.addLine("I LEFT THE WHILE");
+        telemetry.update();
+
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        imu.initialize(parametersMeth);
+
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void turnRightDegrees(double deg, BNO055IMU.Parameters parametersMeth){
+        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+        double start = curent;
+        double stDeg = curent+deg;
+
+        //this loop runs until the robot has turned the correct amount
+        while (((-curent) < (stDeg-1.5)) || (-curent > (stDeg+1.5) )){
+            telemetry.update();
+
+            //prints all the variables
+            telemetry.addLine("IM IN THE WHILE");
+            telemetry.addLine("start: " + Double.toString(start));
+            telemetry.addLine("stDeg: " + Double.toString(stDeg));
+            telemetry.addLine("deg: " + Double.toString(deg));
+            telemetry.addLine("current: " + Double.toString(curent));
+
+            turn(-.25);
+
+            agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
+            telemetry.update();
+        }
+
+        telemetry.addLine("I LEFT THE WHILE");
+        telemetry.update();
+
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        imu.initialize(parametersMeth);
+
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
 
     //----------------------------------------------------------------------------------------------
     // Formatting
