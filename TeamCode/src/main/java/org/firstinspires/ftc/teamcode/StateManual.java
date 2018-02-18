@@ -227,7 +227,7 @@ public class StateManual extends LinearOpMode {
             startTime = System.currentTimeMillis();
             liftMotor.setPower(.5);
         }
-        setPos(100,150,0,startTime);
+        setPos(750,700,0,startTime);
 
     }
 
@@ -236,7 +236,7 @@ public class StateManual extends LinearOpMode {
             startTime = System.currentTimeMillis();
             liftMotor.setPower(-.5);
         }
-        setPos(100,150,0,startTime);
+        setPos(1800,1900,0,startTime);
 
     }
 
