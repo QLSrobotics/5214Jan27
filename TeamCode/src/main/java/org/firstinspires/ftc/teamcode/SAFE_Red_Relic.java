@@ -194,7 +194,7 @@ public class SAFE_Red_Relic extends LinearOpMode{
             telemetry.update();
 
             String keyResult = vuMark.toString();
-//String keyResult = "CENTER";
+//String keyResult = "RIGHT";
 
             if(keyResult == "LEFT"){
 
@@ -220,43 +220,54 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(100);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
 
-                sleep(100);
+                sleep(200);
 
-                dump(.61,.40);
+                straightWithEncoder(.3, -6);
+
+                sleep(200);
+
+                dump(.66,.35);
+
+                sleep(400);
+
+                dump(.59,.42);
+
+                sleep(400);
+
+                dump(.55,.46);
+
+                sleep(400);
+
+                dump(.52,.49);
+
+                sleep(400);
+
+                dump(.49,.52);
 
                 sleep(500);
 
-                dump(.51,.5);
-
-                sleep(800);
 
                 centerDump.setPosition(.25);
 
-                sleep(800);
+                sleep(600);
 
-                dump(.46,.55);
-                //   DUMP HERE
-                //dump(.26,.74);
+                dump(.8,.2);
 
-                sleep(500);
-
-                dump(.26,.74);
-
-                sleep(500);
+                sleep(200);
 
                 straightWithEncoder(.3,-9);
 
@@ -273,9 +284,9 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 sleep(200);
                 straightWithEncoder(.3, 6);
                 sleep(200);
-                straightWithEncoder(.3, -6);
+                straightWithEncoder(.3, -8);
                 sleep(200);
-                turnRightDegrees(72, parameters);
+                turnRightDegrees(69, parameters);
                 sleep(200);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -288,43 +299,50 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(100);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
 
-                sleep(100);
+                sleep(200);
 
-                dump(.61,.40);
+                dump(.66,.35);
+
+                sleep(400);
+
+                dump(.59,.42);
+
+                sleep(400);
+
+                dump(.55,.46);
+
+                sleep(400);
+
+                dump(.52,.49);
+
+                sleep(400);
+
+                dump(.49,.52);
 
                 sleep(500);
 
-                dump(.51,.5);
-
-                sleep(800);
 
                 centerDump.setPosition(.25);
 
-                sleep(800);
+                sleep(600);
 
-                dump(.46,.55);
-                //   DUMP HERE
-                //dump(.26,.74);
+                dump(.8,.2);
 
-                sleep(500);
-
-                dump(.26,.74);
-
-                sleep(500);
+                sleep(200);
 
                 straightWithEncoder(.3,-9);
 
@@ -341,9 +359,9 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 sleep(200);
                 straightWithEncoder(.3, 6);
                 sleep(200);
-                straightWithEncoder(.5, -17);
+                straightWithEncoder(.5, -16);
                 sleep(200);
-                turnRightDegrees(125, parameters);
+                turnRightDegrees(120, parameters);
                 sleep(200);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -355,42 +373,53 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 leftFront.setPower(1);
                 rightBack.setPower(1);
                 rightFront.setPower(1);
-                sleep(350);
+                sleep(100);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(300);
+                sleep(100);
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
 
-                sleep(100);
+                sleep(200);
 
-                dump(.61,.40);
+                straightWithEncoder(.3, -6);
+
+                sleep(200);
+
+                dump(.66,.35);
+
+                sleep(400);
+
+                dump(.59,.42);
+
+                sleep(400);
+
+                dump(.55,.46);
+
+                sleep(400);
+
+                dump(.52,.49);
+
+                sleep(400);
+
+                dump(.49,.52);
 
                 sleep(500);
 
-                dump(.51,.5);
-
-                sleep(800);
 
                 centerDump.setPosition(.25);
 
-                sleep(800);
+                sleep(600);
 
-                dump(.46,.55);
-                //   DUMP HERE
-                //dump(.26,.74);
+                dump(.8,.2);
 
-                sleep(500);
-
-                dump(.26,.74);
-
-                sleep(500);
+                sleep(200);
 
                 straightWithEncoder(.3,-9);
 
@@ -401,13 +430,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
             }else{
 
                 straightWithEncoder(.3, -24);
-                sleep(300);
+                sleep(200);
                 straightWithEncoder(.3, 6);
-                sleep(300);
-                straightWithEncoder(.3, -11);
-                sleep(300);
-                turnRightDegrees(65, parameters);
-                sleep(300);
+                sleep(200);
+                straightWithEncoder(.3, -8);
+                sleep(200);
+                turnRightDegrees(69, parameters);
+                sleep(200);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -419,43 +448,50 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(100);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
 
-                sleep(100);
+                sleep(200);
 
-                dump(.61,.40);
+                dump(.66,.35);
+
+                sleep(400);
+
+                dump(.59,.42);
+
+                sleep(400);
+
+                dump(.55,.46);
+
+                sleep(400);
+
+                dump(.52,.49);
+
+                sleep(400);
+
+                dump(.49,.52);
 
                 sleep(500);
 
-                dump(.51,.5);
-
-                sleep(800);
 
                 centerDump.setPosition(.25);
 
-                sleep(800);
+                sleep(600);
 
-                dump(.46,.55);
-                //   DUMP HERE
-                //dump(.26,.74);
+                dump(.8,.2);
 
-                sleep(500);
-
-                dump(.26,.74);
-
-                sleep(500);
+                sleep(200);
 
                 straightWithEncoder(.3,-9);
 

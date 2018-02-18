@@ -148,39 +148,39 @@ public class StateManual extends LinearOpMode {
 //            }
 
             //this is for game pad one olny right now -- hima -- 21:43 -- SAT feb 17
-            xButton();
-            bButton();
 
-            if(gamepad2.left_bumper){
-                wrist.setPosition(.5);
+            if(gamepad2.a){
+                elbow.setPosition(.75);
+            }
+            if (gamepad2.y){
+                elbow.setPosition(0.25);
             }
 
-            if (gamepad2.a) {
+            bButton();
+            xButton();
+            
+            if (gamepad2.b){
+                elbow.setPosition(0.50);
+            }
+
+            if (gamepad2.left_bumper) {
                 hand.setPosition(0.25);
             }
 
-            if (gamepad2.y) {
+            if (gamepad2.right_bumper) {
                 hand.setPosition(0.75);
-            }
-            gp2X();
-
-            if (gamepad2.b){
-                liftMotor.setPower(-.5);
-                sleep(400);
-                liftMotor.setPower(0);
             }
 
             if (gamepad2.dpad_down) {
-                worm.setPower(-.5);
+                worm.setPower(-.75);
             }
-            if (gamepad2.dpad_left) {
-                wrist.setPosition(0);
-            }
+
             if (gamepad2.dpad_right) {
-                wrist.setPosition(1);
+                worm.setPower(0);
+
             }
             if (gamepad2.dpad_up) {
-                worm.setPower(.5);
+                worm.setPower(1);
             }
 
             telemetry.update();

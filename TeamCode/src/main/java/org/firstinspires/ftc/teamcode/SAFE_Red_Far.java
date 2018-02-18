@@ -174,7 +174,7 @@ public class SAFE_Red_Far extends LinearOpMode{
         while (opModeIsActive()) {
 
             arm(.75); // put arm down
-            sleep(1000);
+            sleep(700);
             colorid = checkColor(colorFront, currentRatio);
 
             telemetry.addLine(colorid);
@@ -183,18 +183,18 @@ public class SAFE_Red_Far extends LinearOpMode{
             if (colorid == "RED"){flicker(0);
             }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
 
-            sleep(700);
+            sleep(500);
             flickServo.setPosition(.49);
             arm(.1); // put arm up
-            sleep(500);
+            sleep(200);
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             sleep(100);
             telemetry.addLine(vuMark.toString());
             telemetry.update();
 
-//            String keyResult = vuMark.toString();
-String keyResult = "LEFT";
+            String keyResult = vuMark.toString();
+//String keyResult = "LEFT";
 
             if(keyResult == "LEFT"){
 
@@ -202,13 +202,13 @@ String keyResult = "LEFT";
                 telemetry.update();
 
                 straightWithEncoder(.3, -24);
-                sleep(300);
+                sleep(100);
                 straightWithEncoder(.3, 6);
-                sleep(300);
-                straightWithEncoder(.3, -4);
-                sleep(300);
-                turnLeftDegress(45, parameters);
-                sleep(300);
+                sleep(100);
+                straightWithEncoder(.4, -4);
+                sleep(100);
+                turnLeftDegress(88, parameters);
+                sleep(100);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -235,38 +235,51 @@ String keyResult = "LEFT";
                 rightFront.setPower(0);
                 sleep(100);
 
-                dump(.68,.33);
+                turnRightDegrees(33, parameters);
 
-                sleep(500);
+                sleep(100);
 
-                dump(.61,.40);
+                dump(.66,.35);
 
-                sleep(1000);
+                sleep(200);
 
-                dump(.51,.5);
+                dump(.59,.42);
 
-                sleep(800);
+                sleep(300);
 
-                centerDump.setPosition(.25);
+                dump(.55,.46);
 
-                sleep(800);
+                sleep(200);
+
+                dump(.52,.49);
+
+                sleep(300);
+
+                dump(.49,.52);
+
+                sleep(300);
 
                 dump(.46,.55);
                 //   DUMP HERE
                 //dump(.26,.74);
 
-                sleep(500);
-                straightWithEncoder(.3,2);
-                sleep(500);
-                dump(.26,.74);
-                sleep(500);
+                sleep(300);
 
 
-                straightWithEncoder(.3,-7);
+                centerDump.setPosition(.25);
 
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
+                sleep(500);
+
+                dump(.8,.2);
+
+                sleep(100);
+
+                straightWithEncoder(.4,-16);
+
+                straightWithEncoder(.4,5);
+                straightWithEncoder(.4,-6);
+                straightWithEncoder(.4,3);
+
 
             }else if(keyResult == "CENTER"){
 
@@ -274,13 +287,13 @@ String keyResult = "LEFT";
                 telemetry.update();
 
                 straightWithEncoder(.3, -24);
-                sleep(300);
+                sleep(100);
                 straightWithEncoder(.3, 6);
-                sleep(300);
-                straightWithEncoder(.3, -4);
-                sleep(300);
-                turnLeftDegress(35, parameters);
-                sleep(300);
+                sleep(100);
+                straightWithEncoder(.4, -4);
+                sleep(100);
+                turnLeftDegress(88, parameters);
+                sleep(100);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -305,37 +318,52 @@ String keyResult = "LEFT";
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
+                sleep(100);
+
+                turnRightDegrees(40, parameters);
 
                 sleep(100);
 
-                dump(.61,.40);
+                dump(.66,.35);
 
-                sleep(600);
+                sleep(200);
 
-                dump(.51,.5);
+                dump(.59,.42);
 
-                sleep(800);
+                sleep(300);
 
-                centerDump.setPosition(.25);
+                dump(.55,.46);
 
-                sleep(800);
+                sleep(200);
+
+                dump(.52,.49);
+
+                sleep(300);
+
+                dump(.49,.52);
+
+                sleep(300);
 
                 dump(.46,.55);
                 //   DUMP HERE
                 //dump(.26,.74);
 
-                sleep(500);
-                straightWithEncoder(.3,2);
-                sleep(500);
-                dump(.26,.74);
-                sleep(500);
+                sleep(300);
 
 
-                straightWithEncoder(.3,-7);
+                centerDump.setPosition(.25);
 
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
+                sleep(500);
+
+                dump(.8,.2);
+
+                sleep(100);
+
+                straightWithEncoder(.4,-13);
+
+                straightWithEncoder(.4,5);
+                straightWithEncoder(.4,-6);
+                straightWithEncoder(.4,3);
 
             }else if (keyResult == "RIGHT"){
 
@@ -343,13 +371,13 @@ String keyResult = "LEFT";
                 telemetry.update();
 
                 straightWithEncoder(.3, -24);
-                sleep(300);
+                sleep(100);
                 straightWithEncoder(.3, 6);
-                sleep(300);
-                straightWithEncoder(.3, -4);
-                sleep(300);
-                turnLeftDegress(25, parameters);
-                sleep(300);
+                sleep(100);
+                straightWithEncoder(.4, -4);
+                sleep(100);
+                turnLeftDegress(88, parameters);
+                sleep(100);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -361,64 +389,77 @@ String keyResult = "LEFT";
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(110);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(300);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
+                sleep(100);
+
+                turnRightDegrees(52, parameters);
+
+                sleep(100);
+
+                dump(.66,.35);
+
                 sleep(200);
 
-                dump(.68,.33);
+                dump(.59,.42);
+
+                sleep(300);
+
+                dump(.55,.46);
 
                 sleep(200);
 
-                dump(.61,.40);
+                dump(.52,.49);
 
-                sleep(500);
+                sleep(300);
 
-                dump(.51,.5);
+                dump(.49,.52);
 
-                sleep(800);
-
-                centerDump.setPosition(.25);
-
-                sleep(800);
+                sleep(300);
 
                 dump(.46,.55);
                 //   DUMP HERE
                 //dump(.26,.74);
 
-                sleep(500);
-                straightWithEncoder(.3,2);
-                sleep(500);
-                dump(.26,.74);
-                sleep(500);
+                sleep(300);
 
 
-                straightWithEncoder(.3,-7);
+                centerDump.setPosition(.25);
 
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
+                sleep(500);
+
+                dump(.8,.2);
+
+                sleep(100);
+
+
+                straightWithEncoder(.4,-16);
+
+                straightWithEncoder(.4,5);
+                straightWithEncoder(.4,-6);
+                straightWithEncoder(.4,3);
 
             }else{
 
                 straightWithEncoder(.3, -24);
-                sleep(300);
+                sleep(100);
                 straightWithEncoder(.3, 6);
-                sleep(300);
-                straightWithEncoder(.3, -11);
-                sleep(300);
-                turnRightDegrees(65, parameters);
-                sleep(300);
+                sleep(100);
+                straightWithEncoder(.4, -4);
+                sleep(100);
+                turnLeftDegress(88, parameters);
+                sleep(100);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -430,49 +471,66 @@ String keyResult = "LEFT";
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(110);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
+                sleep(100);
+
+                turnRightDegrees(40, parameters);
 
                 sleep(100);
 
-                dump(.61,.40);
+                dump(.66,.35);
 
-                sleep(500);
+                sleep(200);
 
-                dump(.51,.5);
+                dump(.59,.42);
 
-                sleep(800);
+                sleep(300);
 
-                centerDump.setPosition(.25);
+                dump(.55,.46);
 
-                sleep(800);
+                sleep(200);
+
+                dump(.52,.49);
+
+                sleep(300);
+
+                dump(.49,.52);
+
+                sleep(300);
 
                 dump(.46,.55);
                 //   DUMP HERE
                 //dump(.26,.74);
 
+                sleep(300);
+
+
+                centerDump.setPosition(.25);
+
                 sleep(500);
 
-                dump(.26,.74);
+                dump(.8,.2);
 
-                sleep(500);
+                sleep(100);
 
-                straightWithEncoder(.3,-9);
+                straightWithEncoder(.4,-13);
 
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
+                straightWithEncoder(.4,5);
+                straightWithEncoder(.4,-6);
+                straightWithEncoder(.4,3);
+
             }
 
 
@@ -665,7 +723,7 @@ String keyResult = "LEFT";
         double stDeg = curent+deg;
 
         //this loop runs until the robot has turned the correct amount
-        while (((curent) < (stDeg-1.5)) || (curent > (stDeg+1.5) )){
+        while (((curent) < (stDeg-2)) || (curent > (stDeg+2) )){
             telemetry.update();
 
             //prints all the variables
@@ -675,7 +733,7 @@ String keyResult = "LEFT";
             telemetry.addLine("deg: " + Double.toString(deg));
             telemetry.addLine("current: " + Double.toString(curent));
 
-            turn(.3);
+            turn(.28);
 
             agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
@@ -715,7 +773,7 @@ String keyResult = "LEFT";
         double stDeg = curent+deg;
 
         //this loop runs until the robot has turned the correct amount
-        while (((-curent) < (stDeg-1.5)) || (-curent > (stDeg+1.5) )){
+        while (((-curent) < (stDeg-2)) || (-curent > (stDeg+2) )){
             telemetry.update();
 
             //prints all the variables
@@ -725,7 +783,7 @@ String keyResult = "LEFT";
             telemetry.addLine("deg: " + Double.toString(deg));
             telemetry.addLine("current: " + Double.toString(curent));
 
-            turn(-.3);
+            turn(-.28);
 
             agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             curent = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
