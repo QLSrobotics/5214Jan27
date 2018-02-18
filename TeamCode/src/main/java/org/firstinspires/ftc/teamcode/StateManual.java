@@ -19,7 +19,6 @@ public class StateManual extends LinearOpMode {
     private DcMotor rightFront;
 
     private DcMotor liftMotor;
-    private DcMotor ramp;
     private DcMotor worm;
 
     private DcMotor lBelt;
@@ -28,7 +27,6 @@ public class StateManual extends LinearOpMode {
     private Servo colSer;
     private Servo knckSer;
 
-    private Servo align;
 
     private Servo rDum;
     private Servo lDum;
@@ -36,15 +34,10 @@ public class StateManual extends LinearOpMode {
     private Servo wrist;
     private Servo hand;
 
-    private DigitalChannel limtTop;
-    private DigitalChannel limtBot;
 
     private int ticks;
     private int position2move2;
 
-
-    boolean limtHit = true;
-    boolean go;
 
     long startTime = 0;
 
@@ -65,21 +58,15 @@ public class StateManual extends LinearOpMode {
         lDum = hardwareMap.servo.get("LD");
         colSer = hardwareMap.servo.get("COLORSERVO");
         knckSer = hardwareMap.servo.get("FLICKSERVO");
-        align = hardwareMap.servo.get("ALIGN1");
-        wrist = hardwareMap.servo.get("wrist");
-        hand = hardwareMap.servo.get("hand");
+        wrist = hardwareMap.servo.get("WRIST");
+        hand = hardwareMap.servo.get("HAND");
 
         lBelt = hardwareMap.dcMotor.get("LBELT");
         rBelt = hardwareMap.dcMotor.get("RBELT");
 
         liftMotor = hardwareMap.dcMotor.get("LIFT");
-        ramp = hardwareMap.dcMotor.get("ramp");
-        worm = hardwareMap.dcMotor.get("worm");
+        worm = hardwareMap.dcMotor.get("WORM");
 
-        limtTop = hardwareMap.get(DigitalChannel.class, "touch_top");
-        limtBot = hardwareMap.get(DigitalChannel.class, "touch_bot");
-
-        align.setPosition(0);
 
         knckSer.setPosition(.5);
         colSer.setPosition(.2);
@@ -136,12 +123,13 @@ public class StateManual extends LinearOpMode {
                 lBelt.setPower(0);
                 rBelt.setPower(0);
             }
-            if (gamepad1.x){
-                motorWithEncoder(liftMotor,.5,8);
-            }
-            if (gamepad1.b){
-                motorWithEncoder(liftMotor,-.5,8);
-            }
+            //TARGET DOESNT WORK IF MOTOR IS STUCK AND PRESSED IN WRONG DIRECTION FIX IT
+//            if (gamepad1.x){
+//                motorWithEncoder(liftMotor,.5,8);
+//            }
+//            if (gamepad1.b){
+//                motorWithEncoder(liftMotor,-.5,8);
+//            }
 
             if (gamepad2.left_trigger >= 0.05) {
                 worm.setPower(-gamepad2.left_trigger);
@@ -193,14 +181,24 @@ public class StateManual extends LinearOpMode {
 
 
     private void motorWithEncoder(DcMotor motorName, double power, int inches) {
+        motorName.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         ticks = (int) (inches * 1120 / (4 * 3.14159)); //converts inches to ticks
-//        telemetry.addData("ticks: ", ticks);
+        telemetry.addData("target position: ", ticks);
         telemetry.update();
 
         //modifies moveto position based on starting ticks position, keeps running tally
-        position2move2 = motorName.getCurrentPosition() + ticks;
-        motorName.setTargetPosition(position2move2);
+        motorName.setTargetPosition(ticks);
         motorName.setPower(power);
+
+        while(motorName.isBusy()){
+
+        }
+
+        motorName.setPower(0);
+        motorName.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
 
     }
 }

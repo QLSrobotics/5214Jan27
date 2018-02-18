@@ -221,6 +221,66 @@ String keyResult = "LEFT";
                 leftFront.setPower(1);
                 rightBack.setPower(1);
                 rightFront.setPower(1);
+
+                sleep(300);
+
+                leftBack.setPower(-1);
+                leftFront.setPower(-1);
+                rightBack.setPower(-1);
+                rightFront.setPower(-1);
+
+                sleep(300);
+
+                leftBack.setPower(0);
+                leftFront.setPower(0);
+                rightBack.setPower(0);
+                rightFront.setPower(0);
+                
+                sleep(1500);
+
+                dump(.61,.4);
+                sleep(1000);
+
+                centerDump.setPosition(.25);
+                dump(.51,.5);
+                //   DUMP HERE
+                //dump(.26,.74);
+
+                sleep(1000);
+
+                centerDump.setPosition(.7);
+                dump(.8,.2);
+
+                sleep(1000);
+
+                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,5);
+                straightWithEncoder(.3,-6);
+                straightWithEncoder(.3,4);
+
+            }else if(keyResult == "CENTER"){
+
+                telemetry.addLine("I'm going in the middle");
+                telemetry.update();
+
+                straightWithEncoder(.3, -22);
+                sleep(300);
+                straightWithEncoder(.3, 4);
+                sleep(300);
+                straightWithEncoder(.3, -5);
+                sleep(300);
+                turnRightDegrees(60, parameters);
+                sleep(300);
+                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+                leftBack.setPower(1);
+                leftFront.setPower(1);
+                rightBack.setPower(1);
+                rightFront.setPower(1);
                 sleep(300);
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
@@ -254,64 +314,120 @@ String keyResult = "LEFT";
                 straightWithEncoder(.3,5);
                 straightWithEncoder(.3,-6);
                 straightWithEncoder(.3,4);
-
-            }else if(keyResult == "CENTER"){
-
-                telemetry.addLine("I'm going in the middle");
-                telemetry.update();
-
-                straightWithEncoder(.3, -22);
-                straightWithEncoder(.3, 5);
-                straightWithEncoder(.3, -15);
-
-                turnRightDegrees(45, parameters);
-                sleep(300);
-                //   DUMP HERE
-                dump(.26,.74);
-                sleep(1000);
-                straightWithEncoder(.4,-10);
-
-                straightWithEncoder(.4,5);
-                straightWithEncoder(.4,-6);
-                straightWithEncoder(.4,4);
             }else if (keyResult == "RIGHT"){
 
                 telemetry.addLine("I'm going right");
                 telemetry.update();
 
                 straightWithEncoder(.3, -22);
-                straightWithEncoder(.3, 5);
-                straightWithEncoder(.3, -15);
-
-                turnRightDegrees(45, parameters);
                 sleep(300);
-                //   DUMP HERE
-                dump(.26,.74);
-                sleep(1000);
-                straightWithEncoder(.4,-10);
+                straightWithEncoder(.3, 4);
+                sleep(300);
+                straightWithEncoder(.3, -22);
+                sleep(300);
+                turnRightDegrees(130, parameters);
+                sleep(300);
+                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                straightWithEncoder(.4,5);
-                straightWithEncoder(.4,-6);
-                straightWithEncoder(.4,4);
+                leftBack.setPower(1);
+                leftFront.setPower(1);
+                rightBack.setPower(1);
+                rightFront.setPower(1);
+                sleep(300);
+                leftBack.setPower(-1);
+                leftFront.setPower(-1);
+                rightBack.setPower(-1);
+                rightFront.setPower(-1);
+
+                sleep(300);
+                leftBack.setPower(0);
+                leftFront.setPower(0);
+                rightBack.setPower(0);
+                rightFront.setPower(0);
+
+                sleep(2000);
+
+                dump(.61,.4);
+
+                sleep(2000);
+
+                centerDump.setPosition(.25);
+                sleep(1000);
+
+                dump(.51,.5);
+                //   DUMP HERE
+                //dump(.26,.74);
+
+                sleep(1000);
+
+                centerDump.setPosition(.7);
+                dump(.8,.2);
+
+                sleep(1000);
+
+                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,5);
+                straightWithEncoder(.3,-6);
+                straightWithEncoder(.3,4);
             }else{
 
                 telemetry.addLine("I'm going middle but didn't get a reading");
                 telemetry.update();
 
                 straightWithEncoder(.3, -22);
-                straightWithEncoder(.3, 5);
-                straightWithEncoder(.3, -15);
-
+                sleep(300);
+                straightWithEncoder(.3, 4);
+                sleep(300);
+                straightWithEncoder(.3, -12);
+                sleep(300);
                 turnRightDegrees(60, parameters);
                 sleep(300);
-                //   DUMP HERE
-                dump(.26,.74);
-                sleep(1000);
-                straightWithEncoder(.4,-10);
+                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-                straightWithEncoder(.4,5);
-                straightWithEncoder(.4,-6);
-                straightWithEncoder(.4,4);
+                leftBack.setPower(1);
+                leftFront.setPower(1);
+                rightBack.setPower(1);
+                rightFront.setPower(1);
+                sleep(300);
+                leftBack.setPower(-1);
+                leftFront.setPower(-1);
+                rightBack.setPower(-1);
+                rightFront.setPower(-1);
+
+                sleep(300);
+                leftBack.setPower(0);
+                leftFront.setPower(0);
+                rightBack.setPower(0);
+                rightFront.setPower(0);
+                sleep(300);
+
+                dump(.61,.4);
+                sleep(1000);
+
+                centerDump.setPosition(.25);
+                dump(.51,.5);
+                //   DUMP HERE
+                //dump(.26,.74);
+
+                sleep(1000);
+
+                centerDump.setPosition(.7);
+                dump(.8,.2);
+
+                sleep(1000);
+
+                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,5);
+                straightWithEncoder(.3,-6);
+                straightWithEncoder(.3,4);
             }
 
 
