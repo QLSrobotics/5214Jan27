@@ -195,12 +195,15 @@ public class SAFE_BLUE_FAR extends LinearOpMode {    // Declare OpMode members.
             telemetry.addLine(vuMark.toString());
             telemetry.update();
 
+            dump(.7, .3);
+
+
            // String keyResult = vuMark.toString();
 
             String keyResult = "LEFT";
 
             if(keyResult == "LEFT"){
-                strafeWithEncoder(.3, 25);
+                strafeWithEncoder(.3, 30);
                 sleep(300);
 
 

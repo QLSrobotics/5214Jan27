@@ -28,9 +28,9 @@ import java.util.Locale;
 /**
  * Created by hima on 2/16/18.
  */
-@Autonomous(name="SAFE_Red_Relic", group="safe")
+@Autonomous(name="SAFE_Red_Far", group="safe")
 
-public class SAFE_Red_Relic extends LinearOpMode{
+public class SAFE_Red_Far extends LinearOpMode{
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     //private DcMotor testMotor;
@@ -193,8 +193,8 @@ public class SAFE_Red_Relic extends LinearOpMode{
             telemetry.addLine(vuMark.toString());
             telemetry.update();
 
-            String keyResult = vuMark.toString();
-//String keyResult = "CENTER";
+//            String keyResult = vuMark.toString();
+String keyResult = "LEFT";
 
             if(keyResult == "LEFT"){
 
@@ -205,9 +205,9 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 sleep(300);
                 straightWithEncoder(.3, 6);
                 sleep(300);
-                straightWithEncoder(.3, -11);
+                straightWithEncoder(.3, -4);
                 sleep(300);
-                turnRightDegrees(65, parameters);
+                turnLeftDegress(45, parameters);
                 sleep(300);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -220,25 +220,28 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(110);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
-
                 sleep(100);
+
+                dump(.68,.33);
+
+                sleep(500);
 
                 dump(.61,.40);
 
-                sleep(500);
+                sleep(1000);
 
                 dump(.51,.5);
 
@@ -253,12 +256,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 //dump(.26,.74);
 
                 sleep(500);
-
+                straightWithEncoder(.3,2);
+                sleep(500);
                 dump(.26,.74);
-
                 sleep(500);
 
-                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,-7);
 
                 straightWithEncoder(.3,5);
                 straightWithEncoder(.3,-6);
@@ -270,13 +274,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 telemetry.update();
 
                 straightWithEncoder(.3, -24);
-                sleep(200);
+                sleep(300);
                 straightWithEncoder(.3, 6);
-                sleep(200);
-                straightWithEncoder(.3, -6);
-                sleep(200);
-                turnRightDegrees(72, parameters);
-                sleep(200);
+                sleep(300);
+                straightWithEncoder(.3, -4);
+                sleep(300);
+                turnLeftDegress(35, parameters);
+                sleep(300);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -288,14 +292,14 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightBack.setPower(1);
                 rightFront.setPower(1);
 
-                sleep(300);
+                sleep(110);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
                 rightBack.setPower(-1);
                 rightFront.setPower(-1);
 
-                sleep(320);
+                sleep(100);
 
                 leftBack.setPower(0);
                 leftFront.setPower(0);
@@ -306,7 +310,7 @@ public class SAFE_Red_Relic extends LinearOpMode{
 
                 dump(.61,.40);
 
-                sleep(500);
+                sleep(600);
 
                 dump(.51,.5);
 
@@ -321,12 +325,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 //dump(.26,.74);
 
                 sleep(500);
-
+                straightWithEncoder(.3,2);
+                sleep(500);
                 dump(.26,.74);
-
                 sleep(500);
 
-                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,-7);
 
                 straightWithEncoder(.3,5);
                 straightWithEncoder(.3,-6);
@@ -338,13 +343,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 telemetry.update();
 
                 straightWithEncoder(.3, -24);
-                sleep(200);
+                sleep(300);
                 straightWithEncoder(.3, 6);
-                sleep(200);
-                straightWithEncoder(.5, -17);
-                sleep(200);
-                turnRightDegrees(125, parameters);
-                sleep(200);
+                sleep(300);
+                straightWithEncoder(.3, -4);
+                sleep(300);
+                turnLeftDegress(25, parameters);
+                sleep(300);
 
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -355,7 +360,8 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 leftFront.setPower(1);
                 rightBack.setPower(1);
                 rightFront.setPower(1);
-                sleep(350);
+
+                sleep(300);
 
                 leftBack.setPower(-1);
                 leftFront.setPower(-1);
@@ -363,12 +369,16 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 rightFront.setPower(-1);
 
                 sleep(300);
+
                 leftBack.setPower(0);
                 leftFront.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
+                sleep(200);
 
-                sleep(100);
+                dump(.68,.33);
+
+                sleep(200);
 
                 dump(.61,.40);
 
@@ -387,12 +397,13 @@ public class SAFE_Red_Relic extends LinearOpMode{
                 //dump(.26,.74);
 
                 sleep(500);
-
+                straightWithEncoder(.3,2);
+                sleep(500);
                 dump(.26,.74);
-
                 sleep(500);
 
-                straightWithEncoder(.3,-9);
+
+                straightWithEncoder(.3,-7);
 
                 straightWithEncoder(.3,5);
                 straightWithEncoder(.3,-6);
