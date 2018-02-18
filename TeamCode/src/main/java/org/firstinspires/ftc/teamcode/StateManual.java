@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.provider.Settings;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -33,6 +35,7 @@ public class StateManual extends LinearOpMode {
     private Servo cDum;
     private Servo wrist;
     private Servo hand;
+    private Servo elbow;
 
 
     private int ticks;
@@ -60,6 +63,7 @@ public class StateManual extends LinearOpMode {
         knckSer = hardwareMap.servo.get("FLICKSERVO");
         wrist = hardwareMap.servo.get("WRIST");
         hand = hardwareMap.servo.get("HAND");
+        elbow=hardwareMap.servo.get("ELBOW");
 
         lBelt = hardwareMap.dcMotor.get("LBELT");
         rBelt = hardwareMap.dcMotor.get("RBELT");
@@ -70,6 +74,7 @@ public class StateManual extends LinearOpMode {
 
         knckSer.setPosition(.5);
         colSer.setPosition(.2);
+        elbow.setPosition(.5);
 
         waitForStart();
 
@@ -146,26 +151,19 @@ public class StateManual extends LinearOpMode {
             xButton();
             bButton();
 
-            if (gamepad2.left_trigger >= 0.05) {
-                worm.setPower(-gamepad2.left_trigger);
-            } else if (gamepad2.right_trigger >= 0.05) {
-                worm.setPower(-gamepad2.right_trigger);
-            } else {
-                worm.setPower(0);
+            if(gamepad2.left_bumper){
+                wrist.setPosition(.5);
             }
 
             if (gamepad2.a) {
-                wrist.setPosition(0.5);
+                hand.setPosition(0.25);
             }
 
             if (gamepad2.y) {
-                hand.setPosition(0.7);
+                hand.setPosition(0.75);
             }
-            if (gamepad2.x){
-                liftMotor.setPower(.5);
-                sleep(200);
-                liftMotor.setPower(0);
-            }
+            gp2X();
+
             if (gamepad2.b){
                 liftMotor.setPower(-.5);
                 sleep(400);
@@ -173,26 +171,42 @@ public class StateManual extends LinearOpMode {
             }
 
             if (gamepad2.dpad_down) {
+                worm.setPower(-.5);
             }
             if (gamepad2.dpad_left) {
+                wrist.setPosition(0);
             }
             if (gamepad2.dpad_right) {
+                wrist.setPosition(1);
             }
             if (gamepad2.dpad_up) {
+                worm.setPower(.5);
             }
 
             telemetry.update();
-            leftBack.setPower(.9*((gamepad1.left_stick_y + gamepad1.left_stick_x + (.5*gamepad1.right_stick_y)) + (.75 * -(gamepad1.right_stick_x))
-                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)));
+            leftBack.setPower(
+                    .9*((gamepad1.left_stick_y + gamepad1.left_stick_x + (.5*gamepad1.right_stick_y)) + (.75 * -(gamepad1.right_stick_x))
+                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger))
+                    + .9*((gamepad2.left_stick_y + gamepad2.left_stick_x + (.5*gamepad2.right_stick_y)) + (.75 * -(gamepad2.right_stick_x))
+                    + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger)));
 
-            leftFront.setPower(.9*((gamepad1.left_stick_y - gamepad1.left_stick_x+ (.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
-                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger))));
+            leftFront.setPower(
+                    .9*((gamepad1.left_stick_y - gamepad1.left_stick_x+ (.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger)))
+                    +.9*((gamepad2.left_stick_y - gamepad2.left_stick_x+ (.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                    + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger))));
 
-            rightBack.setPower(.9*((-gamepad1.left_stick_y + gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
-                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger))));
+            rightBack.setPower(
+                    .9*((-gamepad1.left_stick_y + gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)))
+                    +.9*((-gamepad2.left_stick_y + gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                    + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger))));
 
-            rightFront.setPower(.9*((-gamepad1.left_stick_y - gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
-                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger))));
+            rightFront.setPower(
+                    .9*((-gamepad1.left_stick_y - gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                    + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger)))
+                    +.9*((-gamepad2.left_stick_y - gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                    + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger))));
 
 
 
@@ -227,7 +241,7 @@ public class StateManual extends LinearOpMode {
             startTime = System.currentTimeMillis();
             liftMotor.setPower(.5);
         }
-        setPos(750,700,0,startTime);
+        setSpe(750,700,0,startTime);
 
     }
 
@@ -236,15 +250,30 @@ public class StateManual extends LinearOpMode {
             startTime = System.currentTimeMillis();
             liftMotor.setPower(-.5);
         }
-        setPos(1800,1900,0,startTime);
+        setSpe(1800,1900,0,startTime);
 
     }
 
-    private void setPos(long in, long out, double power, long sTime ){
+    private void gp2X(){
+        if(gamepad2.x){
+            startTime = System.currentTimeMillis();
+            elbow.setPosition(.55);
+        }
+        setPos(1000,1100,.5, startTime, elbow);
+    }
+
+    private void setSpe(long in, long out, double power, long sTime ){
         if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
             liftMotor.setPower(power);
         }
     }
+
+    private void setPos(long in, long out, double pos, long sTime, Servo ser ){
+        if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
+            ser.setPosition(pos);
+        }
+    }
+
 
 //    private void xButton(){
 //        if (gamepad1.x){
