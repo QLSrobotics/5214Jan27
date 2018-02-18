@@ -112,24 +112,35 @@ public class StateManual extends LinearOpMode {
                 cDum.setPosition(0.7);
             }
             if (gamepad1.left_bumper) {
-                cDum.setPosition(0.25);
+                cDum.setPosition(0.2);
                 lDum.setPosition(0.26);
                 rDum.setPosition(0.74);
             }
             if (gamepad1.a) {
-                lDum.setPosition(0.51);
-                rDum.setPosition(0.5);
+                lDum.setPosition(0.56);
+                rDum.setPosition(0.45);
                 cDum.setPosition(0.7);
                 lBelt.setPower(0);
                 rBelt.setPower(0);
+
             }
-            //TARGET DOESNT WORK IF MOTOR IS STUCK AND PRESSED IN WRONG DIRECTION FIX IT
+//            TARGET DOESNT WORK IF MOTOR IS STUCK AND PRESSED IN WRONG DIRECTION FIX IT
 //            if (gamepad1.x){
 //                motorWithEncoder(liftMotor,.5,8);
 //            }
 //            if (gamepad1.b){
 //                motorWithEncoder(liftMotor,-.5,8);
 //            }
+            if (gamepad1.x){
+                liftMotor.setPower(.5);
+                sleep(200);
+                liftMotor.setPower(0);
+            }
+            if (gamepad1.b){
+                liftMotor.setPower(-.5);
+                sleep(400);
+                liftMotor.setPower(0);
+            }
 
             if (gamepad2.left_trigger >= 0.05) {
                 worm.setPower(-gamepad2.left_trigger);
@@ -142,14 +153,19 @@ public class StateManual extends LinearOpMode {
             if (gamepad2.a) {
                 wrist.setPosition(0.5);
             }
-            if (gamepad2.b) {
-                wrist.setPosition(1);
-            }
+
             if (gamepad2.y) {
                 hand.setPosition(0.7);
             }
-            if (gamepad2.x) {
-                hand.setPosition(0.05);
+            if (gamepad2.x){
+                liftMotor.setPower(.5);
+                sleep(200);
+                liftMotor.setPower(0);
+            }
+            if (gamepad2.b){
+                liftMotor.setPower(-.5);
+                sleep(400);
+                liftMotor.setPower(0);
             }
 
             if (gamepad2.dpad_down) {
@@ -201,4 +217,25 @@ public class StateManual extends LinearOpMode {
 
 
     }
+
+//    private void xButton(){
+//        if (gamepad1.x){
+//            startTime = System.currentTimeMillis();
+//            liftMotor.setPower(.5);
+//        }
+//
+//        setPos(100,300,.5,startTime);
+//        setPos(300,500,.6,startTime);
+//        setPos(500,700,.45,startTime);
+//        setPos(900,1500,.8,startTime);
+//
+//
+//
+//    }
+//
+//    private void setPos(long in, long out, double alignInput, long sTime ) {
+//        if ((System.currentTimeMillis() >= (in + sTime)) && (System.currentTimeMillis() <= (out + sTime))) {
+//            align.setPosition(alignInput);
+//        }
+//    }
 }

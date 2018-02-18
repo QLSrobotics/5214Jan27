@@ -26,12 +26,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import java.util.Locale;
 
 /**
- * Created by hima on 2/16/18.
+ * Created by hima on 2/17/18.
  */
-@Autonomous(name="SAFE_Red_Relic", group="safe")
 
-public class SAFE_Red_Relic extends LinearOpMode{
-    // Declare OpMode members.
+@Autonomous(name = "SafeBlueFar", group = "safe")
+public class SAFE_BLUE_FAR extends LinearOpMode {    // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     //private DcMotor testMotor;
     private int target;
@@ -183,8 +182,8 @@ public class SAFE_Red_Relic extends LinearOpMode{
 
             sleep(100);
 
-            if (colorid == "RED"){flicker(0);
-            }else if(checkColor(colorFront,.4) == "BLUE"){flicker(1);}
+            if (colorid == "RED"){flicker(1);}
+            else if(colorid== "BLUE"){flicker(0);}
 
             sleep(1000);
             flickServo.setPosition(.49);
@@ -196,22 +195,26 @@ public class SAFE_Red_Relic extends LinearOpMode{
             telemetry.addLine(vuMark.toString());
             telemetry.update();
 
-//            String keyResult = vuMark.toString();
-String keyResult = "LEFT";
+           // String keyResult = vuMark.toString();
+
+            String keyResult = "LEFT";
 
             if(keyResult == "LEFT"){
+                strafeWithEncoder(.3, 25);
+                sleep(300);
 
-                telemetry.addLine("I'm going left");
-                telemetry.update();
 
-                straightWithEncoder(.3, -22);
+                /*straightWithEncoder(.3, -4);
                 sleep(300);
-                straightWithEncoder(.3, 4);
+                straightWithEncoder(.3, 1);
                 sleep(300);
-                straightWithEncoder(.3, -12);
-                sleep(300);
-                turnRightDegrees(60, parameters);
-                sleep(300);
+                turnLeftDegress(135, parameters);
+                sleep(300);*/
+
+                turnRightDegrees(160, parameters);
+
+                sleep(500);
+
                 leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -237,6 +240,8 @@ String keyResult = "LEFT";
                 rightFront.setPower(0);
 
                 sleep(1500);
+                sleep(500);
+
 
                 dump(.61,.4);
                 sleep(1000);
@@ -253,181 +258,18 @@ String keyResult = "LEFT";
 
                 sleep(1000);
 
-                straightWithEncoder(.3,-9);
+                straightWithEncoder(.3,-15);
 
-                straightWithEncoder(.3,5);
+                straightWithEncoder(.3,6);
                 straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
+                straightWithEncoder(.3,3);
 
             }else if(keyResult == "CENTER"){
 
-                telemetry.addLine("I'm going in the middle");
-                telemetry.update();
-
-                straightWithEncoder(.3, -22);
-                sleep(300);
-                straightWithEncoder(.3, 4);
-                sleep(300);
-                straightWithEncoder(.3, -5);
-                sleep(300);
-                turnRightDegrees(60, parameters);
-                sleep(300);
-                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-                leftBack.setPower(1);
-                leftFront.setPower(1);
-                rightBack.setPower(1);
-                rightFront.setPower(1);
-                sleep(300);
-                leftBack.setPower(-1);
-                leftFront.setPower(-1);
-                rightBack.setPower(-1);
-                rightFront.setPower(-1);
-
-                sleep(300);
-                leftBack.setPower(0);
-                leftFront.setPower(0);
-                rightBack.setPower(0);
-                rightFront.setPower(0);
-                sleep(300);
-
-                dump(.61,.4);
-                sleep(1000);
-
-                centerDump.setPosition(.25);
-                dump(.51,.5);
-                //   DUMP HERE
-                //dump(.26,.74);
-
-                sleep(1000);
-
-                centerDump.setPosition(.7);
-                dump(.8,.2);
-
-                sleep(1000);
-
-                straightWithEncoder(.3,-9);
-
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
             }else if (keyResult == "RIGHT"){
 
-                telemetry.addLine("I'm going right");
-                telemetry.update();
-
-                straightWithEncoder(.3, -22);
-                sleep(300);
-                straightWithEncoder(.3, 4);
-                sleep(300);
-                straightWithEncoder(.3, -22);
-                sleep(300);
-                turnRightDegrees(130, parameters);
-                sleep(300);
-                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-                leftBack.setPower(1);
-                leftFront.setPower(1);
-                rightBack.setPower(1);
-                rightFront.setPower(1);
-                sleep(300);
-                leftBack.setPower(-1);
-                leftFront.setPower(-1);
-                rightBack.setPower(-1);
-                rightFront.setPower(-1);
-
-                sleep(300);
-                leftBack.setPower(0);
-                leftFront.setPower(0);
-                rightBack.setPower(0);
-                rightFront.setPower(0);
-
-                sleep(2000);
-
-                dump(.61,.4);
-
-                sleep(2000);
-
-                centerDump.setPosition(.25);
-                sleep(1000);
-
-                dump(.51,.5);
-                //   DUMP HERE
-                //dump(.26,.74);
-
-                sleep(1000);
-
-                centerDump.setPosition(.7);
-                dump(.8,.2);
-
-                sleep(1000);
-
-                straightWithEncoder(.3,-9);
-
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
             }else{
 
-                telemetry.addLine("I'm going middle but didn't get a reading");
-                telemetry.update();
-
-                straightWithEncoder(.3, -22);
-                sleep(300);
-                straightWithEncoder(.3, 4);
-                sleep(300);
-                straightWithEncoder(.3, -12);
-                sleep(300);
-                turnRightDegrees(60, parameters);
-                sleep(300);
-                leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-                leftBack.setPower(1);
-                leftFront.setPower(1);
-                rightBack.setPower(1);
-                rightFront.setPower(1);
-                sleep(300);
-                leftBack.setPower(-1);
-                leftFront.setPower(-1);
-                rightBack.setPower(-1);
-                rightFront.setPower(-1);
-
-                sleep(300);
-                leftBack.setPower(0);
-                leftFront.setPower(0);
-                rightBack.setPower(0);
-                rightFront.setPower(0);
-                sleep(300);
-
-                dump(.61,.4);
-                sleep(1000);
-
-                centerDump.setPosition(.25);
-                dump(.51,.5);
-                //   DUMP HERE
-                //dump(.26,.74);
-
-                sleep(1000);
-
-                centerDump.setPosition(.7);
-                dump(.8,.2);
-
-                sleep(1000);
-
-                straightWithEncoder(.3,-9);
-
-                straightWithEncoder(.3,5);
-                straightWithEncoder(.3,-6);
-                straightWithEncoder(.3,4);
             }
 
 
