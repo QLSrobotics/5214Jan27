@@ -124,23 +124,27 @@ public class StateManual extends LinearOpMode {
                 rBelt.setPower(0);
 
             }
-//            TARGET DOESNT WORK IF MOTOR IS STUCK AND PRESSED IN WRONG DIRECTION FIX IT
+////            TARGET DOESNT WORK IF MOTOR IS STUCK AND PRESSED IN WRONG DIRECTION FIX IT
+////            if (gamepad1.x){
+////                motorWithEncoder(liftMotor,.5,8);
+////            }
+////            if (gamepad1.b){
+////                motorWithEncoder(liftMotor,-.5,8);
+////            }
 //            if (gamepad1.x){
-//                motorWithEncoder(liftMotor,.5,8);
+//                liftMotor.setPower(.5);
+//                sleep(200);
+//                liftMotor.setPower(0);
 //            }
 //            if (gamepad1.b){
-//                motorWithEncoder(liftMotor,-.5,8);
+//                liftMotor.setPower(-.5);
+//                sleep(400);
+//                liftMotor.setPower(0);
 //            }
-            if (gamepad1.x){
-                liftMotor.setPower(.5);
-                sleep(200);
-                liftMotor.setPower(0);
-            }
-            if (gamepad1.b){
-                liftMotor.setPower(-.5);
-                sleep(400);
-                liftMotor.setPower(0);
-            }
+
+            //this is for game pad one olny right now -- hima -- 21:43 -- SAT feb 17
+            xButton();
+            bButton();
 
             if (gamepad2.left_trigger >= 0.05) {
                 worm.setPower(-gamepad2.left_trigger);
@@ -216,6 +220,30 @@ public class StateManual extends LinearOpMode {
 
 
 
+    }
+
+    private void xButton(){
+        if (gamepad1.x){
+            startTime = System.currentTimeMillis();
+            liftMotor.setPower(.5);
+        }
+        setPos(100,150,0,startTime);
+
+    }
+
+    private void bButton(){
+        if (gamepad1.b){
+            startTime = System.currentTimeMillis();
+            liftMotor.setPower(-.5);
+        }
+        setPos(100,150,0,startTime);
+
+    }
+
+    private void setPos(long in, long out, double power, long sTime ){
+        if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
+            liftMotor.setPower(power);
+        }
     }
 
 //    private void xButton(){
