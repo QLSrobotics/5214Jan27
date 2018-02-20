@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="manual_2_crtls", group="Team5214")
-//@Disabled
+@Disabled
 public class manual_2_crtls extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -99,7 +99,8 @@ public class manual_2_crtls extends LinearOpMode {
             if(gamepad1.right_bumper){lDum.setPosition(.7);rDum.setPosition(.3);}
 
 
-            aButton();
+            xButton();
+            bButton();
 
             //mecaum
             leftFront.setPower(curveSqr(((gamepad2.left_trigger - gamepad2.right_trigger)*-0.5)-gamepad1.left_stick_y + gamepad1.left_stick_x+ gamepad1.right_stick_x - gamepad2.left_stick_y + gamepad2.left_stick_x+ gamepad2.right_stick_x )*.5
@@ -160,31 +161,32 @@ public class manual_2_crtls extends LinearOpMode {
         }
     }
 
-    private void setPos(long in, long out, double alignInput, long sTime ){
+    private void setPos(long in, long out, double power, long sTime ){
         if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
-            align.setPosition(alignInput);
+            liftMotor.setPower(power);
         }
     }
 
-    private void aButton(){
+    private void xButton(){
         if (gamepad1.a){
             startTime = System.currentTimeMillis();
             align.setPosition(0);
             lBelt.setPower(0);
             rBelt.setPower(0);
         }
+        setPos(100,150,.5,startTime);
 
-        setPos(100,300,.5,startTime);
-        setPos(300,500,.6,startTime);
-        setPos(500,700,.45,startTime);
-        setPos(900,1500,.8,startTime);
+    }
 
-
-        if((System.currentTimeMillis() > (startTime+1500)) && (System.currentTimeMillis() < (startTime+2000))) {
+    private void bButton(){
+        if (gamepad1.b){
+            startTime = System.currentTimeMillis();
             align.setPosition(0);
-//            lBelt.setPower(1);
-//            rBelt.setPower(-1);
+            lBelt.setPower(0);
+            rBelt.setPower(0);
         }
+        setPos(100,150,-.5,startTime);
+
     }
 
 }

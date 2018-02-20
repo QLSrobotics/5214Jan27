@@ -23,7 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 @Autonomous(name="redONLYball", group="Ball")
-//@Disabled
+@Disabled
 public class redBall extends LinearOpMode {
 
     //declare vuforia recognizing engine
