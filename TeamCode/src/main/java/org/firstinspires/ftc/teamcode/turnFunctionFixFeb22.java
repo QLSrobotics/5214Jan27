@@ -88,11 +88,15 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
 
         // Loop and update the dashboard
         while (opModeIsActive()) {
-            turnWithGyro("right", .25, 90, parameters);
-            sleep(5000);
-            //turnWithGyro("left", .25, 150, parameters);
-
+//
+//            turnWithGyro("left", .8, 90, parameters);
+//            //turnWithGyro("left", .25, 150, parameters);
+            sleep(3000);
+            turnWithGyro("right", .8, 90, parameters);
             telemetry.update();
+            sleep(3000);
+
+            break;
         }
     }
 
@@ -181,7 +185,7 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
 
     }
 
-    private void turnWithGyro(String direction, double power, double deg, BNO055IMU.Parameters parametersMeth){
+    private void turnWithGyro(String direction, double power, double deg, BNO055IMU.Parameters parametersMeth) {
 
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -189,97 +193,78 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        double current = Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle));
-        double start = current;
-        double target = current+deg;
+        double current = Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle));
+        double start = current + 360.01;
+        double target = current + deg;
         double delta = 1.5;
         telemetry.addLine("start: " + Double.toString(start));
         telemetry.addLine("target: " + Double.toString(target));
         telemetry.addLine("deg: " + Double.toString(deg));
         telemetry.update();
 
+        if (direction == "left") {
+            while (current < target - delta) {
+                telemetry.update();
+                //prints all the variables
+                telemetry.addLine("IM IN THE WHILE");
+                telemetry.addLine("current: " + Double.toString(current));
+                double ratio = current / target;
+                turn(sCurve(power, 4.1, 2.7, ratio));
 
-    //this loop runs until the robot has turned the correct amount
-        while (((current) < (target-5*delta)) || (current > (target+5*delta) )){
-            telemetry.update();
-            //prints all the variables
-            telemetry.addLine("IM IN THE WHILE");
-            telemetry.addLine("current: " + Double.toString(current));
+                agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
+                telemetry.update();
+            }
 
-            if(direction == "left") {
-                turn(power);
-            }
-            else if(direction == "right"){
-                target = 360-target;
-                turn(-power);
-            }
-            agl   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit,agl.firstAngle)));
-            telemetry.update();
         }
 
-        telemetry.addLine("Out of 5 delta");
-        telemetry.update();
-
-        while(((current) < (target-2*delta)) || (current > (target+2*delta) )) {
-            telemetry.update();
-            //prints all the variables
-            telemetry.addLine("IM IN THE WHILE");
-            telemetry.addLine("current: " + Double.toString(current));
-
-            if (direction == "left") {
-                turn(.75 * power);
-            }
-            else if (direction == "right") {
+        else if(direction == "right") {
+            while (current > target + delta) {
+                telemetry.update();
+                //prints all the variables
+                telemetry.addLine("IM IN THE WHILE");
+                telemetry.addLine("current: " + Double.toString(current));
                 target = 360-target;
-                turn(-.75 * power);
+                double ratio = (360 - current) / (360 - target);
+                turn(sCurve(-power, 4.1, 2.7, ratio));
+
+                agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
+                telemetry.update();
             }
-
-            agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
-            telemetry.update();
-        }
-        telemetry.addLine("Out of 2 delta");
-        telemetry.update();
-
-        while(((current) < (target-delta)) || (current > (target+delta) )) {
-            telemetry.update();
-            //prints all the variables
-            telemetry.addLine("I'M IN THE WHILE");
-            telemetry.addLine("current: " + Double.toString(current));
-
-            if (direction == "left") {
-                turn(.5 * power);
-            }
-            else if (direction == "right") {
-                target = 360-target;
-                turn(-.5 * power);
-            }
-
-            agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
-            telemetry.update();
         }
 
-        telemetry.addLine("I LEFT THE WHILE");
+
+            telemetry.addLine("I LEFT THE WHILE");
+            telemetry.update();
+
+            leftBack.setPower(0);
+            rightBack.setPower(0);
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+
+            leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            imu.initialize(parametersMeth);
+
+            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
+
+
+
+    public double sCurve(double p, double o, double v, double ratio){
+        double out = 0;
+        out = p*(1-(1/(1+(Math.pow(Math.E, (-o*((v*ratio)-2) ) )  ) ) ) );
+        telemetry.addLine(Double.toString(out));
         telemetry.update();
-
-        leftBack.setPower(0);
-        rightBack.setPower(0);
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        imu.initialize(parametersMeth);
-
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        return out;
     }
 
     //----------------------------------------------------------------------------------------------
