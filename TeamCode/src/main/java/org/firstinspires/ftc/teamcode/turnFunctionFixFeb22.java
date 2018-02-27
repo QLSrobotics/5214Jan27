@@ -51,22 +51,23 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
     // Main logic
     //----------------------------------------------------------------------------------------------
 
-    @Override public void runOpMode() {
+    @Override
+    public void runOpMode() {
 
         // Set up the parameters with which we will use our IMU. Note that integration
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
-        leftBack  = hardwareMap.get(DcMotor.class, "LB");
+        leftBack = hardwareMap.get(DcMotor.class, "LB");
         rightBack = hardwareMap.get(DcMotor.class, "RB");
-        leftFront  = hardwareMap.get(DcMotor.class, "LF");
+        leftFront = hardwareMap.get(DcMotor.class, "LF");
         rightFront = hardwareMap.get(DcMotor.class, "RF");
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -83,19 +84,20 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
 
         // Start the logging of measured acceleration
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        angles2   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        angles2 = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
         // Loop and update the dashboard
         while (opModeIsActive()) {
 //
 //            turnWithGyro("left", .8, 90, parameters);
-//            //turnWithGyro("left", .25, 150, parameters);
+            //turnWithGyro("left", .25, 150, parameters);
+            //sleep(3000);
+            turnWithGyro("left", .8, 90, parameters);
             sleep(3000);
             turnWithGyro("right", .8, 90, parameters);
+            //sleep(3000);
             telemetry.update();
-            sleep(3000);
-
             break;
         }
     }
@@ -108,80 +110,87 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
 
         // At the beginning of each telemetry update, grab a bunch of data
         // from the IMU that we will then display in separate lines.
-        telemetry.addAction(new Runnable() { @Override public void run()
-        {
-            // Acquiring the angles is relatively expensive; we don't want
-            // to do that in each of the three items that need that info, as that's
-            // three times the necessary expense.
-            angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            gravity  = imu.getGravity();
-        }
+        telemetry.addAction(new Runnable() {
+            @Override
+            public void run() {
+                // Acquiring the angles is relatively expensive; we don't want
+                // to do that in each of the three items that need that info, as that's
+                // three times the necessary expense.
+                angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+                gravity = imu.getGravity();
+            }
         });
 
         telemetry.addLine()
                 .addData("status", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return imu.getSystemStatus().toShortString();
                     }
                 })
                 .addData("calib", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return imu.getCalibrationStatus().toString();
                     }
                 });
 
         telemetry.addLine()
                 .addData("heading", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return formatAngle(angles.angleUnit, angles.firstAngle);
                     }
                 })
                 .addData("roll", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return formatAngle(angles.angleUnit, angles.secondAngle);
                     }
                 })
                 .addData("pitch", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return formatAngle(angles.angleUnit, angles.thirdAngle);
                     }
                 });
 
         telemetry.addLine()
                 .addData("grvty", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return gravity.toString();
                     }
                 })
                 .addData("mag", new Func<String>() {
-                    @Override public String value() {
+                    @Override
+                    public String value() {
                         return String.format(Locale.getDefault(), "%.3f",
-                                Math.sqrt(gravity.xAccel*gravity.xAccel
-                                        + gravity.yAccel*gravity.yAccel
-                                        + gravity.zAccel*gravity.zAccel));
+                                Math.sqrt(gravity.xAccel * gravity.xAccel
+                                        + gravity.yAccel * gravity.yAccel
+                                        + gravity.zAccel * gravity.zAccel));
                     }
                 });
     }
 
-    private double convertGyroReadings(double angle){
-        if(angle < 0){
-            angle += 360;
-        }
-        else{
-            angle = angle;
-        }
+//    private double convertGyroReadings(double angle) {
+//        if (angle < 0) {
+//            angle += 360;
+//        } else {
+//            angle = angle;
+//        }
+//
+//        return angle;
+//    }
 
-        return angle;
-    }
-
-    private void turn(double power){
+    private void turn(double power) {
         //left turn is positive power
         leftBack.setPower(power); //sets left wheels to move backward
         leftFront.setPower(power);
         rightBack.setPower(power); // makes right hand wheels to move forward
         rightFront.setPower(power);
 
-        //makes the robot turn for an indefinite amount of time
+        //makes the robot turn left for an indefinite amount of time
 
     }
 
@@ -194,74 +203,78 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
 
         Orientation agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double current = Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle));
-        double start = current + 360.01;
+        double start = current;
         double target = current + deg;
-        double delta = 1.5;
+        double delta = 0;
+        //sleep(3000);
         telemetry.addLine("start: " + Double.toString(start));
         telemetry.addLine("target: " + Double.toString(target));
         telemetry.addLine("deg: " + Double.toString(deg));
         telemetry.update();
 
         if (direction == "left") {
-            while (current < target - delta) {
+            while (current < target + delta) {
                 telemetry.update();
                 //prints all the variables
                 telemetry.addLine("IM IN THE WHILE");
                 telemetry.addLine("current: " + Double.toString(current));
                 double ratio = current / target;
-                turn(sCurve(power, 4.1, 2.7, ratio));
+                turn(sCurve(power, 4.1, 3.1, ratio));
 
                 agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
+                current = Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle));
                 telemetry.update();
             }
 
         }
 
-        else if(direction == "right") {
+        else if (direction == "right") {
+            target = -target;
             while (current > target + delta) {
                 telemetry.update();
                 //prints all the variables
                 telemetry.addLine("IM IN THE WHILE");
                 telemetry.addLine("current: " + Double.toString(current));
-                target = 360-target;
-                double ratio = (360 - current) / (360 - target);
-                turn(sCurve(-power, 4.1, 2.7, ratio));
+                double ratio = Math.abs(current) / Math.abs(target);
+                turn(sCurve(-power, 4.1, 3.1, ratio));
 
                 agl = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                current = convertGyroReadings(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle)));
+                current = Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle));
                 telemetry.update();
             }
         }
 
+        telemetry.addLine(Double.toString(Double.parseDouble(formatAngle(agl.angleUnit, agl.firstAngle))));
+        telemetry.addLine("I LEFT THE WHILE");
+        telemetry.update();
 
-            telemetry.addLine("I LEFT THE WHILE");
-            telemetry.update();
+        leftBack.setPower(0);
+        rightBack.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
 
-            leftBack.setPower(0);
-            rightBack.setPower(0);
-            leftFront.setPower(0);
-            rightFront.setPower(0);
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        imu.initialize(parametersMeth);
 
-            imu.initialize(parametersMeth);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
+    }
+
+
 
 
 
 
     public double sCurve(double p, double o, double v, double ratio){
         double out = 0;
-        out = p*(1-(1/(1+(Math.pow(Math.E, (-o*((v*ratio)-2) ) )  ) ) ) );
+        out = p*(1.2-(1/(1+(Math.pow(Math.E, (-o*((v*ratio)-2.1) ) )  ) ) ) );
         telemetry.addLine(Double.toString(out));
         telemetry.update();
         return out;
@@ -282,4 +295,5 @@ public class turnFunctionFixFeb22 extends LinearOpMode {
     public String valueHead() {
         return formatAngle(angles.angleUnit, angles.firstAngle);
     }
+
 }
