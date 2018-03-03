@@ -21,7 +21,7 @@ public class ManualUpdate extends LinearOpMode {
     private DcMotor rightFront;
 
     private DcMotor liftMotor;
-    private DcMotor worm;
+    private DcMotor relicMotor;
 
     private DcMotor lBelt;
     private DcMotor rBelt;
@@ -34,8 +34,7 @@ public class ManualUpdate extends LinearOpMode {
     private Servo lDum;
     private Servo cDum;
     private Servo wrist;
-    private Servo hand;
-    private Servo elbow;
+    private Servo finger;
 
 
     private int ticks;
@@ -62,19 +61,17 @@ public class ManualUpdate extends LinearOpMode {
         colSer = hardwareMap.servo.get("COLORSERVO");
         knckSer = hardwareMap.servo.get("FLICKSERVO");
         wrist = hardwareMap.servo.get("WRIST");
-        hand = hardwareMap.servo.get("HAND");
-        elbow=hardwareMap.servo.get("ELBOW");
+        finger = hardwareMap.servo.get("FINGER");
 
         lBelt = hardwareMap.dcMotor.get("LBELT");
         rBelt = hardwareMap.dcMotor.get("RBELT");
 
         liftMotor = hardwareMap.dcMotor.get("LIFT");
-        worm = hardwareMap.dcMotor.get("WORM");
+        relicMotor = hardwareMap.dcMotor.get("RELICMOTOR");
 
 
         knckSer.setPosition(.5);
         colSer.setPosition(.2);
-        elbow.setPosition(.5);
 
         waitForStart();
 
@@ -209,32 +206,58 @@ public class ManualUpdate extends LinearOpMode {
                             + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger))));
 
             */
+
+
+            //gamepad 2 contrls
+
+            if(gamepad2.dpad_up){ }
+            if(gamepad2.dpad_down){ }
+            if(gamepad2.b){wrist.setPosition(.75);}
+            if(gamepad2.x){wrist.setPosition(.25);}
+            if(gamepad2.a){finger.setPosition(.75);}
+            if(gamepad2.y){finger.setPosition(.25);}
+            if     (gamepad2.dpad_right){relicMotor.setPower(-1); }
+            else if(gamepad2.dpad_left) {relicMotor.setPower(1);}
+            else if(gamepad2.right_bumper) {}
+            else if(gamepad2.left_bumper) {}
+            else{relicMotor.setPower(0);}
+
+
+
+
             telemetry.update();
             leftBack.setPower(
-                    .45*((gamepad2.left_stick_y + gamepad2.left_stick_x + (.5*gamepad2.right_stick_y)) + (.75 * -(gamepad2.right_stick_x))
-                            + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger))
-                            + .9*((gamepad2.left_stick_y + gamepad2.left_stick_x + (.5*gamepad2.right_stick_y)) + (.75 * -(gamepad2.right_stick_x))
-                            + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger)));
+                    .9*((gamepad1.left_stick_y + gamepad1.left_stick_x + (.5*gamepad1.right_stick_y)) + (.75 * -(gamepad1.right_stick_x))
+                            + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger))
+                            + .45*((gamepad2.left_stick_y + gamepad2.left_stick_x + (.5*gamepad2.right_stick_y)) + (.75 * -(gamepad2.right_stick_x))
+                            + (.75 * (gamepad2.right_trigger)) + -.75 * (gamepad2.left_trigger)));
 
             leftFront.setPower(
-                    .45*((gamepad2.left_stick_y - gamepad2.left_stick_x+ (.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger)))
-                            +.9*((gamepad2.left_stick_y - gamepad2.left_stick_x+ (.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger))));
+                    .9*((gamepad1.left_stick_y - gamepad1.left_stick_x+ (.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                            + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger)))
+                            +.45*((gamepad2.left_stick_y - gamepad2.left_stick_x+ (.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                            + (-.75 * (gamepad2.right_trigger)) + .75 * (gamepad2.left_trigger))));
 
             rightBack.setPower(
-                    .45*((-gamepad2.left_stick_y + gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger)))
-                            +.9*((-gamepad2.left_stick_y + gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (.5 * (gamepad2.right_trigger)) + -.5 * (gamepad2.left_trigger))));
+                    .9*((-gamepad1.left_stick_y + gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                            + (.5 * (gamepad1.right_trigger)) + -.5 * (gamepad1.left_trigger)))
+                            +.45*((-gamepad2.left_stick_y + gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                            + (.75 * (gamepad2.right_trigger)) + -.75 * (gamepad2.left_trigger))));
 
             rightFront.setPower(
-                    .45*((-gamepad2.left_stick_y - gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger)))
-                            +.9*((-gamepad2.left_stick_y - gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
-                            + (-.5 * (gamepad2.right_trigger)) + .5 * (gamepad2.left_trigger))));
+                    .9*((-gamepad1.left_stick_y - gamepad1.left_stick_x+ (-.5*gamepad1.right_stick_y) + (.75 * -(gamepad1.right_stick_x))
+                            + (-.5 * (gamepad1.right_trigger)) + .5 * (gamepad1.left_trigger)))
+                            +.45*((-gamepad2.left_stick_y - gamepad2.left_stick_x+ (-.5*gamepad2.right_stick_y) + (.75 * -(gamepad2.right_stick_x))
+                            + (-.75 * (gamepad2.right_trigger)) + .75 * (gamepad2.left_trigger))));
         }
+
+
+
+
+
+
     }
+
 
 
     private void motorWithEncoder(DcMotor motorName, double power, int inches) {
@@ -277,13 +300,13 @@ public class ManualUpdate extends LinearOpMode {
 
     }
 
-    private void gp2X(){
-        if(gamepad2.x){
-            startTime = System.currentTimeMillis();
-            elbow.setPosition(.55);
-        }
-        setPos(1000,1100,.5, startTime, elbow);
-    }
+//    private void gp2X(){
+//        if(gamepad2.x){
+//            startTime = System.currentTimeMillis();
+//            elbow.setPosition(.55);
+//        }
+//        setPos(1000,1100,.5, startTime, elbow);
+//    }
 
     private void setSpe(long in, long out, double power, long sTime ){
         if((System.currentTimeMillis() >= (in+sTime)) && (System.currentTimeMillis() <= (out+sTime))){
